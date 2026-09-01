@@ -44,6 +44,8 @@ for the version of the code present in this tree.
 
 完整产品契约见 [`PRODUCT_VISION.md`](PRODUCT_VISION.md)。
 
+Windows 安装包在官网下载（不进本仓库）：https://www.bgssai.com/downloads/BGSSAI-Build-Setup.exe
+
 配套产品 `bgssai-bot` 对标 Grok Bot；因 Grok Bot 不开源，使用 Grok Build（本仓库）作为驱动。
 
 下文保留上游 Grok Build 的安装、构建与开发说明。

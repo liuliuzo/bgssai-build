@@ -20,6 +20,7 @@
 | 上游 | xAI 开源的 Grok Build：终端 AI 编码 Agent（全屏 TUI / Headless / ACP） |
 | 本仓库 | 在 Grok Build 源码基础上建设的 BGSSAI 产品线 AI 编程工具 |
 | 给谁用 | 研发、自动化脚本、支持 ACP 的编辑器 |
+| 分发 | Windows 安装包在官网下载：https://www.bgssai.com/downloads/BGSSAI-Build-Setup.exe（不进 Git） |
 | 解决什么 | 在真实代码库里理解上下文、改文件、跑命令、接 MCP、管理长任务 |
 
 本仓库**不是** Grok Bot 的产品形态。桌面 Bot 产品见配套仓库 `bgssai-bot`。
