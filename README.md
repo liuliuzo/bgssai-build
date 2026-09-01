@@ -38,6 +38,18 @@ for the version of the code present in this tree.
 
 ---
 
+## 产品定位（BGSSAI Build）
+
+**bgssai-build 是基于 [Grok Build](https://github.com/xai-org/grok-build) 的 AI 编程工具。**
+
+完整产品契约见 [`PRODUCT_VISION.md`](PRODUCT_VISION.md)。
+
+配套产品 `bgssai-bot` 对标 Grok Bot；因 Grok Bot 不开源，使用 Grok Build（本仓库）作为驱动。
+
+下文保留上游 Grok Build 的安装、构建与开发说明。
+
+---
+
 ## Installing the released binary
 
 Prebuilt binaries are published for macOS, Linux, and Windows:
