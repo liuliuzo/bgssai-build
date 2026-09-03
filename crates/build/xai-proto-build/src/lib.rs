@@ -142,11 +142,32 @@ impl XaiProtoBuilder {
         }
 
         // Can only process one input file when using --dependency_out=FILE.
-        for proto in protos {
+        for (index, proto) in protos.into_iter().enumerate() {
+            // MODIFIED (bgssai fork): the upstream version writes the dependency
+            // list to `/dev/stdout` and the descriptor set to `/dev/null`. Neither
+            // device exists on Windows, so protoc fails with
+            // "No such file or directory" there. Route both through temp files
+            // instead — same result on every platform.
+            let temp_dir = std::env::temp_dir();
+            let deps_path = temp_dir.join(format!(
+                "xai-proto-deps-{}-{index}.d",
+                std::process::id()
+            ));
+            let descriptor_path = temp_dir.join(format!(
+                "xai-proto-descriptor-{}-{index}.bin",
+                std::process::id()
+            ));
+
             let mut command = Command::new(protoc.unwrap_or(Path::new("protoc")));
             command
-                .arg("--dependency_out=/dev/stdout")
-                .arg("--descriptor_set_out=/dev/null");
+                .arg(format!(
+                    "--dependency_out={}",
+                    deps_path.to_str().context("temp path not UTF-8")?
+                ))
+                .arg(format!(
+                    "--descriptor_set_out={}",
+                    descriptor_path.to_str().context("temp path not UTF-8")?
+                ));
 
             // Add protoc's well-known types include directory first (if found).
             // This is needed for Bazel sandboxed builds where protoc and its
@@ -172,15 +193,27 @@ impl XaiProtoBuilder {
                 return Err(anyhow::anyhow!("protoc command failed"));
             }
 
-            let output =
-                String::from_utf8(output.stdout).context("protoc command output not UTF-8")?;
+            // MODIFIED (bgssai fork): read the dependency list from the temp file
+            // instead of stdout, and drop the descriptor set we only wrote to
+            // satisfy protoc.
+            let output = fs::read_to_string(&deps_path)
+                .context("protoc dependency output not readable")?;
+            let _ = fs::remove_file(&deps_path);
+            let _ = fs::remove_file(&descriptor_path);
 
+            // The dependency file starts with "<descriptor_set_out>: " followed by
+            // the input and its transitive imports.
+            let descriptor_prefix = format!(
+                "{}:",
+                descriptor_path.to_str().context("temp path not UTF-8")?
+            );
             let mut lines = output.lines();
             let first_line = lines.next().context("protoc command output is empty")?;
-            let prefix = "/dev/null:";
-            let rem = first_line.strip_prefix(prefix).with_context(|| {
-                format!("protoc command output must start with /dev/null: {output:?}")
-            })?;
+            let rem = first_line
+                .strip_prefix(descriptor_prefix.as_str())
+                .with_context(|| {
+                    format!("protoc output must start with {descriptor_prefix}: {output:?}")
+                })?;
             for line in iter::once(rem).chain(lines) {
                 let line = line.trim();
                 let line = line.strip_suffix("\\").unwrap_or(line);
