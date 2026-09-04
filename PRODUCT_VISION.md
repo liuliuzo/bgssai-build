@@ -82,6 +82,6 @@ Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_clie
 ## 五、技术基线
 
 - 语言与运行时：Rust；CLI/TUI 入口与上游 Grok Build 一致。
-- **默认分支：`main`。本仓库没有 `develop`。** 合入、发布、同步上游都走 `main`。不要按其它业务仓的习惯往 develop 推。
-- 同步关系：本树周期性同步上游 Grok Build；根目录 `SOURCE_REV` 记录对应 monorepo commit。
-- 配套产品：`bgssai-bot` 以本仓库所代表的 Grok Build 为 Agent 驱动（`bgssai-bot` 默认分支仍是 `develop`）。
+- **分支**：`main` 只同步上游 Grok Build，与 grok-build 保持一致。BGSSAI 的默认分支是 **`develop`**；全部 BGSSAI 修改先在 feature 分支完成，再合入 `develop`。不要把 BGSSAI 提交写回 `main`。
+- 同步关系：`main` 周期性同步上游 Grok Build；根目录 `SOURCE_REV` 记录对应 monorepo commit。同步后把 `main` 合入 `develop`。
+- 配套产品：`bgssai-bot` 以本仓库 `develop` 所代表的 Grok Build 为 Agent 驱动（`bgssai-bot` 默认分支仍是 `develop`）。
