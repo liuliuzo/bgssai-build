@@ -35,13 +35,23 @@ Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_clie
 * **AI 成本红线**：不得创建 PR 后会持续唤醒 AI 的 heartbeat / automation / 后台轮询；PR 状态仅在当前会话单次查询或用户下次交互时再查。
 * 一切产出物（代码 / 文档 / 提交信息 / PR 描述 / 评审与回信）**全局禁用 emoji 及装饰性图形符号**；语义性符号（→、×、§ 等）不属装饰性符号，允许使用。
 
-## GitHub 分支与合并工作流
+## Git 分支（Git Flow，强制）
 
-- 对需要交付文件修改的 GitHub 仓库，先在独立 feature 分支上完成修改、验证、提交并推送；禁止直接在 `develop` 或 `main` 上改。
-- BGSSAI 改动的合并目标是 **`develop`**，不是 `main`。
-- `main` 只用于把 grok-build 同步进来；同步完成后，再把 `main` 合入 `develop`，不要把愿景、安装包说明、Windows 修补等 BGSSAI 提交写回 `main`。
+本产品线严格遵循 Git Flow。GitHub 默认分支一律是 **`develop`**。
+
+| 分支 | 用途 | 发布环境 |
+| --- | --- | --- |
+| `feature/*` | Agent / 开发者的工作分支 | 不直接发布 |
+| `develop` | 集成分支（默认分支） | 开发环境 |
+| `release` | 测试冻结 | 测试环境 |
+| `master` | 生产冻结 | 生产环境 |
+
+- **AI Agent 必须先创建自己的 feature 分支再改文件**；禁止直接在 `develop` / `release` / `master` / `main` 上改。
+- **`main` 例外（仅本仓）**：只同步上游 grok-build，与 grok-build 保持一致。禁止把 BGSSAI 改动提交到 `main`。同步后把 `main` 合入 `develop`。生产发布走 **`master`**，不要把 `main` 当成生产分支。
+- Feature 合入 **`develop`**（先开 PR）。`develop` → `release`、`release` → `master` 的晋升同样先开 PR。
+- 开发环境发布 **`develop`**；测试环境发布 **`release`**；生产环境发布 **`master`**。
 - 合并任何分支前，必须先向用户明确询问是否合并；只有用户明确同意后，才能执行合并。
-- 用户未明确同意时，不得合并、开启 auto-merge，或直接推送到 `develop`、`main`、`master`、`Master` 等受保护分支。
+- 用户未明确同意时，不得合并、开启 auto-merge，或直接推送到 `develop`、`release`、`master`、`main`、`Master` 等受保护分支。
 - 用户明确同意合并后，才可以将指定工作分支合并到目标分支并推送远端；合并前应确认目标分支、源分支和待合并 commit。
 - 本地 commit、远端工作分支 push、GitHub PR 创建和分支合并是四个不同状态，不得混淆或省略。
 - 创建或更新 PR 后，最终回复必须显示：仓库、commit SHA、PR 编号与链接、目标分支、`DRAFT` / `OPEN` / `MERGED` / `CLOSED` 状态，以及“等待用户确认合并”或“PR 已合并”。
