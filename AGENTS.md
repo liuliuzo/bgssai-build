@@ -50,9 +50,9 @@ Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_clie
 - **`main` 例外（仅本仓）**：只同步上游 grok-build，与 grok-build 保持一致。禁止把 BGSSAI 改动提交到 `main`。同步后把 `main` 合入 `develop`。生产发布走 **`master`**，不要把 `main` 当成生产分支。
 - Feature 合入 **`develop`**（先开 PR）。`develop` → `release`、`release` → `master` 的晋升同样先开 PR。
 - 开发环境发布 **`develop`**；测试环境发布 **`release`**；生产环境发布 **`master`**。
-- 合并任何分支前，必须先向用户明确询问是否合并；只有用户明确同意后，才能执行合并。
-- 用户未明确同意时，不得合并、开启 auto-merge，或直接推送到 `develop`、`release`、`master`、`main`、`Master` 等受保护分支。
-- 用户明确同意合并后，才可以将指定工作分支合并到目标分支并推送远端；合并前应确认目标分支、源分支和待合并 commit。
+- 用户明确同意合并或直接要求合并时，可以执行指定 PR 的合并，无需再次询问。
+- 用户未明确同意且未提出合并要求时，不得合并、开启 auto-merge，或直接推送到 `develop`、`release`、`master`、`main`、`Master` 等受保护分支。
+- 合并前必须确认仓库、源分支、目标分支和待合并 commit；授权仅限用户指定的 PR 或分支，不得扩展到其他 PR 或分支。
 - 本地 commit、远端工作分支 push、GitHub PR 创建和分支合并是四个不同状态，不得混淆或省略。
 - 创建或更新 PR 后，对用户只说整体结果（已开 PR 等确认，或已合入 develop），不要列出 SHA、文件清单或检查详情。
 - PR 状态查询遵守 **AI 成本红线**：不创建 PR 后持续唤醒的后台监控；在用户下一次交互开始时查询 PR 最新状态即可。
