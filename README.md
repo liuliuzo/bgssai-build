@@ -58,7 +58,7 @@ for the version of the code present in this tree.
 
 **bgssai-build 是基于 [Grok Build](https://github.com/xai-org/grok-build) 的 AI 编程工具。**
 
-完整产品契约见 [`PRODUCT_VISION.md`](PRODUCT_VISION.md)。`main` 只同步 grok-build；BGSSAI 默认分支是 **`develop`**，改动走 feature 分支再合入 `develop`。
+完整产品契约见 [`PRODUCT_VISION.md`](PRODUCT_VISION.md)。Git Flow：feature → `develop`（dev）→ `release`（test）→ `master`（prod）。`main` 只同步 grok-build。
 
 Windows 安装包在官网（bgssai-website）下载（不进本仓库）：https://www.bgssai.com/downloads/BGSSAI-Build-Setup.exe
 

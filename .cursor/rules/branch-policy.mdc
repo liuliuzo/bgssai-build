@@ -1,10 +1,12 @@
 ---
-description: main 只同步 grok-build；BGSSAI 改动走 feature 再合入 develop
+description: main 只同步 grok-build；BGSSAI 走 Git Flow（feature → develop → release → master）
 alwaysApply: true
 ---
 
 # 分支
 
-- **`main`**：只同步上游 grok-build，与 grok-build 保持一致。禁止把 BGSSAI 改动提交到 `main`。
-- **`develop`**：本仓默认分支。全部 BGSSAI 修改合入这里。同步 grok-build 后，把 `main` 合入 `develop`。
-- **AI Agent**：先在独立 feature 分支上改，验证后再合并到 `develop`。禁止直接在 `develop` 或 `main` 上改。
+- **`main`**：只同步上游 grok-build。禁止把 BGSSAI 改动提交到 `main`。同步后把 `main` 合入 `develop`。
+- **`develop`**：默认分支；开发环境发布。BGSSAI 改动合入这里。
+- **`release`**：测试环境发布。
+- **`master`**：生产环境发布。不要把 `main` 当成生产分支。
+- **AI Agent**：先建 feature 分支再改，验证后合入 `develop`。
