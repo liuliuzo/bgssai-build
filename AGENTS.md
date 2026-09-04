@@ -21,7 +21,11 @@ Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_clie
 ## 仓库定位
 
 本仓库是 grok-build 的 fork，作为 BGSSAI 的 AI 编程工具，并向 `bgssai-bot` 提供 Agent 内核源码。
-详细产品契约见 `PRODUCT_VISION.md`。默认分支是 `main`。
+详细产品契约见 `PRODUCT_VISION.md`。
+
+- **`main`**：只同步上游 [Grok Build](https://github.com/xai-org/grok-build)，与 grok-build 保持一致。不要把 BGSSAI 改动提交到 `main`。
+- **`develop`**：本仓默认分支。全部 BGSSAI 修改合入这里。
+- **AI Agent**：先在独立 feature 分支上改，验证后再合并到 `develop`。
 
 本仓不是 Grok Bot，也不做桌面 Bot 壳——那是 `bgssai-bot`。
 
@@ -33,7 +37,9 @@ Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_clie
 
 ## GitHub 分支与合并工作流
 
-- 对需要交付文件修改的 GitHub 仓库，先在独立工作分支上完成修改、验证、提交并推送。
+- 对需要交付文件修改的 GitHub 仓库，先在独立 feature 分支上完成修改、验证、提交并推送；禁止直接在 `develop` 或 `main` 上改。
+- BGSSAI 改动的合并目标是 **`develop`**，不是 `main`。
+- `main` 只用于把 grok-build 同步进来；同步完成后，再把 `main` 合入 `develop`，不要把愿景、安装包说明、Windows 修补等 BGSSAI 提交写回 `main`。
 - 合并任何分支前，必须先向用户明确询问是否合并；只有用户明确同意后，才能执行合并。
 - 用户未明确同意时，不得合并、开启 auto-merge，或直接推送到 `develop`、`main`、`master`、`Master` 等受保护分支。
 - 用户明确同意合并后，才可以将指定工作分支合并到目标分支并推送远端；合并前应确认目标分支、源分支和待合并 commit。

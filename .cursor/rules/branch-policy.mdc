@@ -1,0 +1,10 @@
+---
+description: main 只同步 grok-build；BGSSAI 改动走 feature 再合入 develop
+alwaysApply: true
+---
+
+# 分支
+
+- **`main`**：只同步上游 grok-build，与 grok-build 保持一致。禁止把 BGSSAI 改动提交到 `main`。
+- **`develop`**：本仓默认分支。全部 BGSSAI 修改合入这里。同步 grok-build 后，把 `main` 合入 `develop`。
+- **AI Agent**：先在独立 feature 分支上改，验证后再合并到 `develop`。禁止直接在 `develop` 或 `main` 上改。
