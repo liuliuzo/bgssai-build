@@ -1,0 +1,42 @@
+# AGENTS.md
+
+## 产品线规划（全线统一）
+
+BGSSAI 产品线按下面五条划分职责，各仓实现与文档不得与此冲突。
+
+1. **BGSSAI** 是给一人公司（OPC）创业者的全行业工具集合，让用户能找到创业所需的全部工具。
+2. **bgssai-website** 是公司官网，只对外介绍产品与服务，不承载产品操作、在线对话或中心账号。
+3. **bgssai-chat** 提供对标 ChatGPT / Gemini / Claude home / Grok 的 Web 在线对话 AI。
+4. **中心用户账号在 bgssai-chat**：可授权登录旗下各 App；各 App 同时可以有自己的用户账号体系，两者并存。
+5. **bgssai-bot** 对标 Grok Bot。BGSSAI 的全部产品应用可以托管给 Bot 直接操作。
+
+Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_client。
+
+愿景唯一权威：`bgssai-skeleton/docs/PRODUCT-LINE-VISION.md`。本段是各仓副本，变更以该文件为准。
+
+**本仓位置**：本仓是 AI 编程工具（对标 Grok Build），同时是 bgssai-bot 的 Agent 内核来源，不是第 1 条里面向 OPC 用户的业务工具。
+
+> 本文件与 `CLAUDE.md` 内容保持一致（供不同 AI 工具各自读取），改一处必须同步改另一处。
+
+## 仓库定位
+
+本仓库是 grok-build 的 fork，作为 BGSSAI 的 AI 编程工具，并向 `bgssai-bot` 提供 Agent 内核源码。
+详细产品契约见 `PRODUCT_VISION.md`。默认分支是 `main`。
+
+本仓不是 Grok Bot，也不做桌面 Bot 壳——那是 `bgssai-bot`。
+
+## 强制约定
+
+* 提交信息遵循 Conventional Commits。
+* **AI 成本红线**：不得创建 PR 后会持续唤醒 AI 的 heartbeat / automation / 后台轮询；PR 状态仅在当前会话单次查询或用户下次交互时再查。
+* 一切产出物（代码 / 文档 / 提交信息 / PR 描述 / 评审与回信）**全局禁用 emoji 及装饰性图形符号**；语义性符号（→、×、§ 等）不属装饰性符号，允许使用。
+
+## GitHub 分支与合并工作流
+
+- 对需要交付文件修改的 GitHub 仓库，先在独立工作分支上完成修改、验证、提交并推送。
+- 合并任何分支前，必须先向用户明确询问是否合并；只有用户明确同意后，才能执行合并。
+- 用户未明确同意时，不得合并、开启 auto-merge，或直接推送到 `develop`、`main`、`master`、`Master` 等受保护分支。
+- 用户明确同意合并后，才可以将指定工作分支合并到目标分支并推送远端；合并前应确认目标分支、源分支和待合并 commit。
+- 本地 commit、远端工作分支 push、GitHub PR 创建和分支合并是四个不同状态，不得混淆或省略。
+- 创建或更新 PR 后，最终回复必须显示：仓库、commit SHA、PR 编号与链接、目标分支、`DRAFT` / `OPEN` / `MERGED` / `CLOSED` 状态，以及“等待用户确认合并”或“PR 已合并”。
+- PR 状态查询遵守 **AI 成本红线**：不创建 PR 后持续唤醒的后台监控；在用户下一次交互开始时查询 PR 最新状态即可。
