@@ -1,0 +1,4 @@
+# 安装脚本一律 LF 落盘：这个仓在 Windows 上开发（core.autocrlf=true），
+# 脚本被转成 CRLF 之后，拿到 macOS / Linux 上跑 sh 会报 bad interpreter。
+# 只作用于 bgssai/ 目录，不动上游的文件，跟 grok-build 同步时不会冲突。
+*.sh text eol=lf
