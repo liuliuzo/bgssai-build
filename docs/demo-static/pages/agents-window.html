@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agents Window · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="editor-agent.html">经典 IDE</a>
+      <a href="tui-terminal.html">终端 TUI</a>
+      <a href="docmost-sync.html">Docmost 协同</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Agent</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <button class="icon-btn" type="button" title="Back">‹</button>
+        <button class="icon-btn" type="button" title="Forward">›</button>
+      </div>
+      <div class="tb-title">bgssai-build [develop] — Transparent AI Coding</div>
+      <div class="tb-right">
+        <a class="docmost-status-pill" href="docmost-sync.html" title="Docmost 协同已就绪">
+          <span style="font-size:8px;">●</span> Docmost Connected [PAT]
+        </a>
+        <a class="mode-toggle-btn" href="editor-agent.html">IDE 模式 ↗</a>
+        <a class="mode-toggle-btn" href="tui-terminal.html">TUI 终端 ↗</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class="body">
+      <!-- Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="icon-btn" type="button" title="Collapse Sidebar">☰</button>
+          <a class="new-chat" href="agents-window.html">
+            <span style="font-weight:700;">+</span> New Chat
+          </a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html" class="active"><span class="ico">⌂</span>Home</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan & PRD</a>
+          <a href="docmost-sync.html"><span class="ico">✦</span>Docmost Sync</a>
+          <a href="mcp.html"><span class="ico">▦</span>MCP Servers</a>
+          <a href="skills.html"><span class="ico">»</span>Skills (/skills)</a>
+          <a href="rules.html"><span class="ico">§</span>Rules (AGENTS.md)</a>
+        </nav>
+
+        <div class="aw-list">
+          <div class="side-label">
+            <span>Repositories</span>
+            <span class="acts"><button class="icon-btn" type="button" style="width:20px;height:20px;">+</button></span>
+          </div>
+          <a class="repo-item active" href="agents-window.html">
+            <span style="font-size:12px;">⌂</span>
+            <span class="name">bgssai-build</span>
+            <span class="tag">develop</span>
+          </a>
+          <a class="repo-item" href="agents-window.html">
+            <span style="font-size:12px;">⌂</span>
+            <span class="name">bgssai-docmost</span>
+            <span class="tag">develop</span>
+          </a>
+          <a class="repo-item" href="agents-window.html">
+            <span style="font-size:12px;">⌂</span>
+            <span class="name">bgssai-tokenhub-cn</span>
+            <span class="tag">develop</span>
+          </a>
+          <a class="repo-item" href="agents-window.html">
+            <span style="font-size:12px;">⌂</span>
+            <span class="name">bgssai-website</span>
+          </a>
+
+          <div class="side-label" style="margin-top:12px;">
+            <span>Recent Sessions</span>
+          </div>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="name">User Multi-Auth & Docmost UML sync</span>
+            <span class="time">8m</span>
+          </a>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="name">Tokenhub stream routing & failover</span>
+            <span class="time">1h</span>
+          </a>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="name">Refactor ratatui bottom dock</span>
+            <span class="time">1d</span>
+          </a>
+        </div>
+
+        <div class="aw-foot">
+          <div class="user-chip">
+            <span class="avatar">留</span>
+            <span>留留赵 (OPC)</span>
+          </div>
+          <a class="icon-btn" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Center Main Workspace -->
+      <section class="main">
+        <div class="home">
+          <!-- Context Chips -->
+          <div class="ctx-chips">
+            <a class="chip" href="#"><span>⎇</span> Branch: develop <span class="chev">▾</span></a>
+            <a class="chip" href="#"><span>□</span> Local Workspace <span class="chev">▾</span></a>
+            <a class="chip" href="docmost-sync.html" style="border-color:rgba(37,99,235,0.3); color:var(--brand);">
+              <span>✦</span> Sync Space: BGSSAI Build Docs <span class="chev">▾</span>
+            </a>
+          </div>
+
+          <!-- Centered Smart Composer -->
+          <div class="home-composer">
+            <textarea placeholder="Plan, Build, / for skills, @ for context, /doc for docmost sync..." rows="3"></textarea>
+            <div class="row">
+              <button class="icon-btn" type="button" title="Attach file or symbol">+</button>
+              <a class="model-sel" href="settings-models.html">
+                Tokenhub: Claude 3.7 Sonnet (Fast) <span class="chev">▾</span>
+              </a>
+              <span style="flex:1;"></span>
+              <span class="docmost-status-pill" style="font-size:10px; padding:2px 6px;">
+                Auto PRD/HLD/LLD Sync ON
+              </span>
+              <button class="icon-btn" type="button" title="Voice Input">●</button>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="home-actions">
+            <a class="btn btn-primary" href="agent-plan.html">
+              <span>§</span> Plan New Idea (PRD / HLD) <span class="kbd">⇧Tab</span>
+            </a>
+            <a class="btn" href="agents-chat.html">
+              <span>▶</span> Open Last Coding Thread
+            </a>
+            <a class="btn" href="agent-review.html">
+              <span>⌥</span> Review Architecture & Diff
+            </a>
+            <a class="btn" href="docmost-sync.html">
+              <span>✦</span> Docmost Knowledge Base
+            </a>
+          </div>
+
+          <!-- Tip / Philosophy -->
+          <div class="home-tip">
+            <span>※ 消除 AI 编程黑盒：AI 编码同时，使用 <code>/doc</code> 将类图、时序图、流程图自动沉淀至 Docmost 知识库。</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>

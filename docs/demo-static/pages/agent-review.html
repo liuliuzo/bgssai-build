@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architecture & Diff Review · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="agents-chat.html">对话界面</a>
+      <a href="docmost-sync.html">Docmost 协同</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Review</span><span>View</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-title">Review Mode: 4 Files Changed + Docmost Architecture Verification</div>
+      <div class="tb-right">
+        <a class="btn btn-sm btn-primary" href="agents-chat.html">确认并合并更改</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Sidebar: Changed Files List + Docmost Models List -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <span style="font-weight:600; font-size:12px;">Review Scope</span>
+        </div>
+        <div class="aw-list">
+          <div class="side-label">Code Files (+290 −12)</div>
+          <div class="repo-item active">
+            <span>§</span>
+            <span class="name">UserAuthService.java</span>
+            <span class="tag" style="color:var(--ok);">+124</span>
+          </div>
+          <div class="repo-item">
+            <span>§</span>
+            <span class="name">UserAuthMapper.java</span>
+            <span class="tag" style="color:var(--ok);">+32</span>
+          </div>
+          <div class="repo-item">
+            <span>§</span>
+            <span class="name">InstallScriptController.java</span>
+            <span class="tag" style="color:var(--ok);">+89</span>
+          </div>
+          <div class="repo-item">
+            <span>§</span>
+            <span class="name">McpToolService.java</span>
+            <span class="tag" style="color:var(--ok);">+45</span>
+          </div>
+
+          <div class="side-label" style="margin-top:16px;">Docmost Engineering Docs</div>
+          <a class="repo-item" href="docmost-sync.html">
+            <span>✦</span>
+            <span class="name">PRD: 多端认证需求说明</span>
+            <span class="tag">v1</span>
+          </a>
+          <a class="repo-item" href="docmost-sync.html">
+            <span>✦</span>
+            <span class="name">HLD: 认证架构拓扑</span>
+            <span class="tag">v1</span>
+          </a>
+          <a class="repo-item" href="docmost-sync.html">
+            <span>✦</span>
+            <span class="name">LLD: 接口时序与类图</span>
+            <span class="tag">v1</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Diff Review Area -->
+      <section class="main" style="padding:20px; overflow-y:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div>
+            <span style="font-weight:700; font-size:15px;">UserAuthService.java</span>
+            <span style="color:var(--text-3); font-size:12px; margin-left:8px;">src/main/java/com/bgssai/docmost/auth/service/</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-sm">Revert File</button>
+            <button class="btn btn-sm btn-primary">Accept File</button>
+          </div>
+        </div>
+
+        <!-- Code Diff Viewer -->
+        <div class="s-card" style="font-family:var(--mono); font-size:12px; line-height:1.6; background:var(--bg-input);">
+          <div style="padding:8px 12px; background:var(--bg-elev-2); border-bottom:1px solid var(--border); font-size:11px; color:var(--text-2);">
+            @@ -45,12 +45,26 @@ public class UserAuthService
+          </div>
+          <div style="padding:8px 12px;">
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;public RespUserLogin loginPassword(ReqUserLogin req) {</div>
+            <div class="diff-removed">−&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log.info("用户登录：" + req.getUserName());</div>
+            <div class="diff-added">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 校验用户状态，冻结用户立即拦截</div>
+            <div class="diff-added">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SysUser user = userMapper.selectByUserName(req.getUserName());</div>
+            <div class="diff-added">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (user != null &amp;&amp; user.getStatus() == 1) {</div>
+            <div class="diff-added">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new BizException(CommonErrorCode.FORBIDDEN.getCode(), "账号已被冻结");</div>
+            <div class="diff-added">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return completeLogin(user, req);</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+          </div>
+        </div>
+
+        <!-- Architecture Co-Review Banner -->
+        <div class="docmost-card" style="margin-top:20px;">
+          <div class="docmost-card-head">
+            <span class="title">✦ 软件工程架构图比对核验 (Docmost 同步校验通过)</span>
+            <a class="btn btn-sm" href="docmost-sync.html">查看 Docmost 历史快照 ↗</a>
+          </div>
+          <p style="font-size:12px; color:var(--text-2); margin:0 0 10px;">
+            AI 已自动检测当前代码变更与 Docmost 对应页面 <code>#1026 模块详细设计</code> 的类图与时序图一致。类名、方法入参、返回值均无语义漂移。
+          </p>
+          <div class="uml-diagram-box">
+classDiagram<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class UserAuthService {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+loginPassword(ReqUserLogin) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+loginCode(LoginCodeRequest) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+oauthLogin(OAuthLoginRequest) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-checkUserStatus(SysUser) void<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;UserAuthService --> SysUserMapper : 持久化依赖<br>
+&nbsp;&nbsp;&nbsp;&nbsp;UserAuthService --> DocmostTokenService : 令牌签发
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>

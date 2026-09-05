@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bgssai-build 桌面与控制台原型画廊</title>
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 28px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: -8px;
+      margin-bottom: 14px;
+    }
+    .badge-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      color: var(--accent-soft);
+      font-weight: normal;
+    }
+    .feature-banner {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .feature-banner h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .feature-banner p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<div class="page" style="align-items:stretch;">
+  <div class="gallery-page">
+    <div class="proto-bar" style="max-width:none;margin:12px 0 16px;">
+      <div class="brand">
+        <span>bgssai-build</span>
+        <span class="tag">UI 原型规范画廊</span>
+      </div>
+      <nav>
+        <a href="pages/agents-window.html">进入 Agents 独立窗口</a>
+        <a href="pages/editor-agent.html">进入 IDE 协同视图</a>
+        <a href="pages/docmost-sync.html">Docmost 同步中心</a>
+        <a href="PAGE-FLOW.html">查看页面流转图</a>
+        <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+      </nav>
+    </div>
+
+    <div class="feature-banner">
+      <h3>核心设计理念：融合 Cursor 交互 + Grok-Build 终端 + Docmost 研发透明化</h3>
+      <p>
+        本项目对标 <b>Cursor</b> 的现代独立 Agents 窗口（居中 Composer、多阶段 Plan、高保真 Diff Review、Customize 规则与技能体系）与 <b>Grok-Build</b> 的高性能 Rust Ratatui 终端模式；<br>
+        同时彻底解决 Agent 编程「黑盒失控、用户无法洞察设计细节」的业界通病——通过注入 MCP 实时同步协议，在编码推演过程中持续将 <b>PRD 需求、HLD 概要设计、LLD 详细设计以及 6 类 Mermaid UML 图表（类图、时序图、泳道图、状态图、流程图、架构图）</b> 实时流式写入 <b>bgssai-docmost</b>。
+      </p>
+    </div>
+
+    <!-- Group 1: Cursor Modern Agents Window System -->
+    <div class="section-title">
+      <span>1. Agents 独立视窗系统 (Cursor 对齐)</span>
+      <span class="badge-pill">现代居中布局 · 多模式协同</span>
+    </div>
+    <div class="section-desc">轻量独立的沉浸式 AI 编程交互视窗，具备强大的上下文感知与模型路由。</div>
+    <div class="grid">
+      <a class="thumb" href="pages/agents-window.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Agents 主窗口 (Home)</b>
+          <span>居中 Composer · Tokenhub 模型选择 · Docmost 连通胶囊</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/agents-chat.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i><i class="a"></i></div>
+        </div>
+        <div class="cap">
+          <b>Agents 对话执行态 (Chat & Traces)</b>
+          <span>思考流 · 工具追踪 · 嵌入式 UML 时序图 · 代码变更卡</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/agent-plan.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Plan 规划模式 (Plan Mode)</b>
+          <span>多阶段拆解 · 自动化 PRD 撰写 · 实时流程图推演</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/agent-review.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Review 审查模式 (Diff Review)</b>
+          <span>双轨校验 · 代码行级 Diff 审查 · UML 架构一致性核验</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Group 2: Classic Editor + Agent -->
+    <div class="section-title">
+      <span>2. 经典 IDE 编辑器双核模式 (VS Code 风格)</span>
+      <span class="badge-pill">Activity Bar · 代码高亮 · 侧边 Assistant</span>
+    </div>
+    <div class="section-desc">供习惯传统开发环境的工程师在代码工作区与 Agent 之间无缝切换。</div>
+    <div class="grid">
+      <a class="thumb" href="pages/editor-agent.html">
+        <div class="mini dark">
+          <div class="ms"></div>
+          <div class="mm"><i></i><i class="a"></i></div>
+        </div>
+        <div class="cap">
+          <b>IDE + Agent 协同视窗</b>
+          <span>深色经典编辑环境 · 目录树 · Monaco Diff 高亮 · 侧栏 Agent</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Group 3: Docmost Realtime Sync Center -->
+    <div class="section-title">
+      <span>3. 研发透明化同步中心 (bgssai-docmost Killer Feature)</span>
+      <span class="badge-pill">消灭黑盒 · 6 类 UML 实时镜像</span>
+    </div>
+    <div class="section-desc">解决 AI 编程用户完全无法知道做了什么的痛点，所有架构推演与软件工程文档自动上屏。</div>
+    <div class="grid">
+      <a class="thumb" href="pages/docmost-sync.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Docmost 知识库实时同步看板</b>
+          <span>空间连接 · PRD / HLD / LLD 进度 · Mermaid 类图渲染 · 审计导出</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Group 4: Customize, Skills, Rules & Models -->
+    <div class="section-title">
+      <span>4. 扩展机制、技能库、工程规则与模型中枢 (Customize & Config)</span>
+      <span class="badge-pill">MCP · Skills · Rules · Tokenhub</span>
+    </div>
+    <div class="section-desc">灵活管理工具协议、企业工程规范、自动化技能与大模型原生接入。</div>
+    <div class="grid">
+      <a class="thumb" href="pages/mcp.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>MCP 协议工具管理</b>
+          <span>bgssai-docmost 专用通道 · Tokenhub SSE 网关 · 本地沙箱</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/skills.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Skills 技能中心</b>
+          <span>bgssai-design-docs · /simplify · /review · /test · /explain-arch</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/rules.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Rules 规则体系</b>
+          <span>AGENTS.md 守则 · BGSSAI-Standards 严禁 Emoji · 研发同步约束</span>
+        </div>
+      </a>
+
+      <a class="thumb" href="pages/settings-models.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Tokenhub 模型配置中心</b>
+          <span>Claude 3.7 / Grok 3 / GPT-4.5 (Global) · DeepSeek-R1 / Qwen 2.5 (CN)</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Group 5: Grok-Build Terminal TUI Mode -->
+    <div class="section-title">
+      <span>5. Grok-Build 终端全屏 TUI 模式 (Rust Ratatui Engine)</span>
+      <span class="badge-pill">极速轻量 · 极客终端 · ACP 引擎</span>
+    </div>
+    <div class="section-desc">对标 SpaceXAI Grok-Build 的终端交互体验，内置 Docmost 状态栏与实时流式输出。</div>
+    <div class="grid">
+      <a class="thumb" href="pages/tui-terminal.html">
+        <div class="mini dark">
+          <div class="ms"></div>
+          <div class="mm"><i></i><i></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>Grok-Build 终端 TUI 模拟器</b>
+          <span>全键盘驱动 · 双栏 ANSI 终端 · 实时推演日志 · 命令行 Prompt</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Group 6: Architecture & Page Flow -->
+    <div class="section-title">
+      <span>6. 原型流转图与规范文档</span>
+      <span class="badge-pill">页面跳转关系 · 架构规格</span>
+    </div>
+    <div class="section-desc">查阅页面状态流转、交互热键和详细设计规格。</div>
+    <div class="grid">
+      <a class="thumb" href="PAGE-FLOW.html">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>页面跳转流程图 (PAGE-FLOW)</b>
+          <span>状态机流转 · 路由矩阵 · 交互热键</span>
+        </div>
+      </a>
+      <a class="thumb" href="../feature/UI_DESIGN_SPEC.md">
+        <div class="mini">
+          <div class="ms"></div>
+          <div class="mm"><i class="a"></i><i></i><i></i></div>
+        </div>
+        <div class="cap">
+          <b>UI 设计规格说明书 (Markdown)</b>
+          <span>UI_DESIGN_SPEC.md 完整设计规范与架构定义</span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

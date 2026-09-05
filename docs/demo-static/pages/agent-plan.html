@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan Mode (PRD & Architecture) · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="agents-chat.html">对话执行</a>
+      <a href="docmost-sync.html">Docmost 协同</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Plan</span><span>View</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-title">Plan Mode: Architecture & Requirements Specification</div>
+      <div class="tb-right">
+        <a class="docmost-status-pill" href="docmost-sync.html">
+          <span style="font-size:8px;">●</span> Docmost Ready
+        </a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <a class="new-chat" href="agents-window.html">
+            <span style="font-weight:700;">+</span> New Chat
+          </a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">⌂</span>Home</a>
+          <a href="agent-plan.html" class="active"><span class="ico">§</span>Plan & PRD</a>
+          <a href="docmost-sync.html"><span class="ico">✦</span>Docmost Sync</a>
+          <a href="mcp.html"><span class="ico">▦</span>MCP Servers</a>
+          <a href="skills.html"><span class="ico">»</span>Skills (/skills)</a>
+          <a href="rules.html"><span class="ico">§</span>Rules (AGENTS.md)</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">Active Plan Stages</div>
+          <div class="repo-item active">
+            <span>①</span> <span class="name">PRD 需求分解</span>
+          </div>
+          <div class="repo-item active">
+            <span>②</span> <span class="name">HLD 架构图设计</span>
+          </div>
+          <div class="repo-item">
+            <span>③</span> <span class="name">代码分层编写</span>
+          </div>
+          <div class="repo-item">
+            <span>④</span> <span class="name">Docmost 快照落库</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Plan Content -->
+      <section class="main" style="padding:28px 40px; overflow-y:auto;">
+        <div style="max-width:880px; margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+            <div>
+              <span class="chip" style="color:var(--brand); border-color:rgba(37,99,235,0.3); margin-bottom:8px;">
+                Plan #42 · 需求先行，拒绝盲目编码
+              </span>
+              <h2 style="margin:6px 0; font-size:20px;">任务规划：多渠道认证与软工图纸沉淀</h2>
+              <p style="color:var(--text-2); margin:0; font-size:13px;">
+                AI 将在动手写代码前，先明确需求规格说明书 (PRD) 与架构设计，并同步草案至 Docmost。
+              </p>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <a class="btn" href="agents-window.html">取消</a>
+              <a class="btn btn-primary" href="agents-chat.html">确认计划并启动执行 ⇧⏎</a>
+            </div>
+          </div>
+
+          <!-- Plan Steps -->
+          <div class="s-card">
+            <div class="s-row">
+              <div class="lab">
+                <b>阶段 1：生成软件工程需求说明书 (PRD)</b>
+                <span>定义用户用例表（UC-01 验证码登录、UC-02 授权登录）、权限边界与验收标准</span>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.1); color:var(--ok);">已就绪 (v1)</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>阶段 2：设计系统架构拓扑与 UML 时序图 (HLD/LLD)</b>
+                <span>产出前后端鉴权链路时序图 (sequenceDiagram) 及类图 (classDiagram)</span>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.1); color:var(--ok);">已就绪 (v1)</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>阶段 3：编写业务代码与单元测试</b>
+                <span>实现 `UserAuthService`、`UserAuthMapper`，并补全单测覆盖率</span>
+              </div>
+              <span class="badge" style="background:rgba(37,99,235,0.1); color:var(--brand);">待执行</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>阶段 4：Docmost 知识库原子提交与版本递增</b>
+                <span>调用 MCP `create_page` 与 `update_page` 写入最终版带图文档</span>
+              </div>
+              <span class="badge" style="background:rgba(37,99,235,0.1); color:var(--brand);">待执行</span>
+            </div>
+          </div>
+
+          <!-- Pre-plan Diagram Preview -->
+          <div class="s-card" style="padding:16px;">
+            <div style="font-weight:600; margin-bottom:10px;">预先提炼的业务流程图 (Mermaid 规划预览):</div>
+            <div class="uml-diagram-box">
+flowchart TD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A[用户请求验证码/授权] --> B{账号是否存在?}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;B -- 否 --> C[自动创建新用户记录]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;B -- 是 --> D{检查账号状态是否冻结}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;D -- 冻结 --> E[拒绝登录抛出 403 Forbidden]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;D -- 正常 --> F[生成并签发长期有效 JWT 令牌]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;C --> F<br>
+&nbsp;&nbsp;&nbsp;&nbsp;F --> G[记录统一登录审计日志 sys_login_log]
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>

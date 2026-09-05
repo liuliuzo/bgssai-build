@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skills 技能库 · bgssai-build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <span>bgssai-build</span>
+      <span class="tag">Customize</span>
+    </div>
+    <nav>
+      <a href="../index.html">控制台原型首页</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="docmost-sync.html">Docmost 同步中心</a>
+      <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Sync</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <button class="icon-btn" type="button" title="Back" onclick="history.back()">‹</button>
+        <button class="icon-btn" type="button" title="Forward" onclick="history.forward()">›</button>
+      </div>
+      <div class="tb-title">
+        <span class="workspace-pill">bgssai-build [develop]</span>
+      </div>
+      <div class="tb-right">
+        <a class="docmost-indicator" href="docmost-sync.html" title="Docmost 知识库实时同步中">
+          <span class="dot"></span>
+          <span>Docmost: 已连接</span>
+        </a>
+        <a class="ide-btn" href="editor-agent.html">IDE 视图 <span style="opacity:0.6">↗</span></a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Left Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="aw-collapse" type="button" title="Collapse">☰</button>
+          <a class="new-chat" href="agents-window.html"><span>+</span> 新任务</a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">✦</span>Agents 任务</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan 规划</a>
+          <a href="agent-review.html"><span class="ico">✓</span>Review 审查</a>
+          <a href="docmost-sync.html"><span class="ico">▦</span>Docmost 同步</a>
+          <a href="skills.html" class="active"><span class="ico">⚙</span>配置 & 扩展</a>
+          <a href="tui-terminal.html"><span class="ico">>_</span>TUI 终端</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">当前活跃仓库</div>
+          <a class="repo active" href="agents-window.html">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-build</span><span class="sub">feature/ui-cursor</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-docmost</span><span class="sub">develop</span></span>
+          </a>
+          <div class="side-label" style="margin-top:16px;">最近 Agent 记录</div>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="meta"><span class="name">UI 优化与 Docmost 协同</span><span class="sub">2 分钟前 · 8 个文件</span></span>
+            <span class="time">8m</span>
+          </a>
+        </div>
+        <div class="aw-foot">
+          <a class="user" href="settings-models.html"><span class="avatar">B</span><b>BGSSAI Admin</b></a>
+          <a class="icon-btn" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section class="main">
+        <header class="header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h1 style="font-size:15px;font-weight:600;">扩展与自定义 (Customize)</h1>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn" type="button">+ 创建新技能</button>
+            <a class="btn primary" href="agents-window.html">在对话中调用</a>
+          </div>
+        </header>
+
+        <div class="settings" style="padding:20px 24px;overflow-y:auto;flex:1;">
+          <div class="chips-row">
+            <a class="chip-tab on" href="skills.html">Skills 技能</a>
+            <a class="chip-tab" href="mcp.html">MCP 工具协议</a>
+            <a class="chip-tab" href="rules.html">Rules 规范</a>
+            <a class="chip-tab" href="settings-models.html">Tokenhub 模型配置</a>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Agent Skills 技能包</div>
+            <div style="font-size:12px;color:var(--text-2);">
+              技能定义了特定工程任务的工作流、UML 图生成规范以及与 Docmost 知识库实时同步的触发策略。
+            </div>
+          </div>
+
+          <div class="s-card">
+            <!-- Core Skill: bgssai-design-docs -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>bgssai-design-docs</b>
+                  <span class="badge ok" style="font-size:11px;">Always Active · Default</span>
+                  <span style="font-size:11px;color:var(--brand);background:var(--accent-dim);padding:1px 6px;border-radius:4px;">透明研发规范</span>
+                </div>
+                <span>自动生成 PRD 需求文档、HLD 概要设计、LLD 详细设计以及 6 类 Mermaid UML 建模，并实时推送至 Docmost</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  触发条件: 任何涉及跨模块设计、架构重构、新建功能或明确文档指令的任务
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">查看说明书</button>
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Skill: /simplify -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>/simplify</b>
+                  <span class="badge" style="font-size:11px;">On Demand</span>
+                </div>
+                <span>审查修改的代码，消除冗余、消除重复逻辑，增强鲁棒性，保障严格无表情符号规范</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  触发命令: <code>/simplify [file_or_scope]</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Skill: /review -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>/review</b>
+                  <span class="badge" style="font-size:11px;">Pre-Commit</span>
+                </div>
+                <span>双轨代码与架构图审查，对比实际代码修改与 Docmost 中的设计文档，防止架构漂移</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  触发命令: <code>/review --with-docmost</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Skill: /test -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>/test</b>
+                  <span class="badge" style="font-size:11px;">On Demand</span>
+                </div>
+                <span>针对变更函数与模块自动编写单元测试与集成测试用例，运行 cargo test / pytest 并验证覆盖率</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  触发命令: <code>/test --coverage</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Skill: /explain-arch -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>/explain-arch</b>
+                  <span class="badge" style="font-size:11px;">On Demand</span>
+                </div>
+                <span>逆向工程分析指定代码目录，生成完整类图 (Class Diagram) 与模块时序图 (Sequence Diagram)</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  触发命令: <code>/explain-arch src/core/</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;">
+            <div style="font-weight:600;margin-bottom:8px;">技能存储目录: <code style="font-size:12px;color:var(--accent-soft);">.bgssai/skills/</code></div>
+            <div style="font-size:12px;color:var(--text-2);line-height:1.6;">
+              支持以 Markdown 格式添加自定义技能，只需在技能目录中创建 <code>SKILL.md</code> 并声明 frontmatter 变量即可被 Agent 即时感知。
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>
