@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tokenhub 模型设置 · bgssai-build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <span>bgssai-build</span>
+      <span class="tag">Settings</span>
+    </div>
+    <nav>
+      <a href="../index.html">控制台原型首页</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="docmost-sync.html">Docmost 同步中心</a>
+      <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Sync</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <button class="icon-btn" type="button" title="Back" onclick="history.back()">‹</button>
+        <button class="icon-btn" type="button" title="Forward" onclick="history.forward()">›</button>
+      </div>
+      <div class="tb-title">
+        <span class="workspace-pill">bgssai-build [develop]</span>
+      </div>
+      <div class="tb-right">
+        <a class="docmost-indicator" href="docmost-sync.html" title="Docmost 知识库实时同步中">
+          <span class="dot"></span>
+          <span>Docmost: 已连接</span>
+        </a>
+        <a class="ide-btn" href="editor-agent.html">IDE 视图 <span style="opacity:0.6">↗</span></a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Left Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="aw-collapse" type="button" title="Collapse">☰</button>
+          <a class="new-chat" href="agents-window.html"><span>+</span> 新任务</a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">✦</span>Agents 任务</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan 规划</a>
+          <a href="agent-review.html"><span class="ico">✓</span>Review 审查</a>
+          <a href="docmost-sync.html"><span class="ico">▦</span>Docmost 同步</a>
+          <a href="mcp.html"><span class="ico">⚙</span>配置 & 扩展</a>
+          <a href="tui-terminal.html"><span class="ico">>_</span>TUI 终端</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">当前活跃仓库</div>
+          <a class="repo active" href="agents-window.html">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-build</span><span class="sub">feature/ui-cursor</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-docmost</span><span class="sub">develop</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-tokenhub</span><span class="sub">main</span></span>
+          </a>
+          <div class="side-label" style="margin-top:16px;">最近 Agent 记录</div>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="meta"><span class="name">UI 优化与 Docmost 协同</span><span class="sub">2 分钟前 · 8 个文件</span></span>
+            <span class="time">8m</span>
+          </a>
+        </div>
+        <div class="aw-foot">
+          <a class="user" href="settings-models.html"><span class="avatar">B</span><b>BGSSAI Admin</b></a>
+          <a class="icon-btn active" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section class="main">
+        <header class="header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h1 style="font-size:15px;font-weight:600;">设置 · Tokenhub 大模型中枢</h1>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn" type="button">测试全部模型连通</button>
+            <a class="btn primary" href="agents-window.html">保存并返回</a>
+          </div>
+        </header>
+
+        <div class="settings" style="padding:20px 24px;overflow-y:auto;flex:1;">
+          <div class="chips-row">
+            <a class="chip-tab" href="skills.html">Skills 技能</a>
+            <a class="chip-tab" href="mcp.html">MCP 工具协议</a>
+            <a class="chip-tab" href="rules.html">Rules 规范</a>
+            <a class="chip-tab on" href="settings-models.html">Tokenhub 模型配置</a>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">原生模型接入路由</div>
+            <div style="font-size:12px;color:var(--text-2);">
+              bgssai-build 通过内部专用中枢 <b>bgssai-tokenhub</b> 分流国际主流模型与大陆本土模型，保障极致生成速度与推演质量。
+            </div>
+          </div>
+
+          <div class="s-card">
+            <!-- Default Model -->
+            <div class="s-row">
+              <div class="lab">
+                <b>默认 Agent 主模型 (Default Coding Model)</b>
+                <span>用于代码编写、重构与架构多维度推演</span>
+              </div>
+              <select style="background:var(--bg-elev-2);border:1px solid var(--border-2);padding:6px 12px;border-radius:6px;color:var(--text);font-size:12px;min-width:240px;">
+                <option selected>Claude 3.7 Sonnet (Thinking · Global)</option>
+                <option>DeepSeek-R1 671B (Native · CN)</option>
+                <option>Grok 3 (SpaceXAI 原生路由 · Global)</option>
+                <option>GPT-4.5 (High Speed · Global)</option>
+                <option>Qwen 2.5 Max (Alibaba · CN)</option>
+              </select>
+            </div>
+
+            <!-- Fast Model -->
+            <div class="s-row">
+              <div class="lab">
+                <b>快速辅助模型 (Fast Auxiliary Model)</b>
+                <span>用于代码库快速语义搜索、提交日志生成、代码注释补全</span>
+              </div>
+              <select style="background:var(--bg-elev-2);border:1px solid var(--border-2);padding:6px 12px;border-radius:6px;color:var(--text);font-size:12px;min-width:240px;">
+                <option selected>Claude 3.5 Haiku (High Speed · Global)</option>
+                <option>DeepSeek-V3 671B (Native · CN)</option>
+                <option>GPT-4o Mini (Global)</option>
+              </select>
+            </div>
+
+            <!-- Docmost Reasoning Model -->
+            <div class="s-row">
+              <div class="lab">
+                <b>Docmost 工程文档专用推演模型</b>
+                <span>专门用于逆向分析生成 PRD、HLD、LLD 及 Mermaid 规范 UML 图表</span>
+              </div>
+              <select style="background:var(--bg-elev-2);border:1px solid var(--border-2);padding:6px 12px;border-radius:6px;color:var(--text);font-size:12px;min-width:240px;">
+                <option selected>DeepSeek-R1 (深度推演架构关系 · CN)</option>
+                <option>Claude 3.7 Sonnet (Extended Output · Global)</option>
+              </select>
+            </div>
+
+            <!-- Max Mode -->
+            <div class="s-row">
+              <div class="lab">
+                <b>Max Mode (极限思维链推演)</b>
+                <span>解锁最大思考预算 (64k Reasoning Tokens)，提供极其严谨的类图时序图设计与代码校验</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="badge ok">已启用</span>
+                <input type="checkbox" checked style="accent-color:var(--accent-soft);transform:scale(1.2);">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tokenhub Status Summary -->
+          <div style="margin-top:24px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:8px;">Tokenhub 中枢网关连接状态</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:6px;padding:12px 16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <b>bgssai-tokenhub-global</b>
+                  <span class="badge ok">在线 · 42ms</span>
+                </div>
+                <div style="font-size:11px;color:var(--text-3);line-height:1.5;">
+                  网关: https://api.global.tokenhub.bgssai.com<br>
+                  支持: Claude 3.7 / GPT-4.5 / Grok 3<br>
+                  状态: 流式通道就绪，Thinking Tokens 支持
+                </div>
+              </div>
+
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:6px;padding:12px 16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <b>bgssai-tokenhub-cn</b>
+                  <span class="badge ok">在线 · 18ms</span>
+                </div>
+                <div style="font-size:11px;color:var(--text-3);line-height:1.5;">
+                  网关: https://api.cn.tokenhub.bgssai.com<br>
+                  支持: DeepSeek-R1 / Qwen 2.5 Max<br>
+                  状态: 本土高速专线直连，代码私有沙箱已隔离
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

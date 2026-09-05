@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grok-Build 终端 TUI 模式 · bgssai-build</title>
+  <link rel="stylesheet" href="../css/app.css">
+  <style>
+    .terminal-body {
+      background: #090d16;
+      color: #e2e8f0;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 0;
+      overflow: hidden;
+    }
+    .tui-topbar {
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      padding: 6px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+    .tui-topbar .active-status {
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tui-content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      min-height: 0;
+    }
+    .tui-pane-left {
+      border-right: 1px solid #1e293b;
+      padding: 12px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tui-pane-right {
+      background: #050811;
+      padding: 12px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tui-box {
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      background: #0b1120;
+      padding: 10px 12px;
+    }
+    .tui-box-title {
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #1e293b;
+      padding-bottom: 4px;
+    }
+    .tui-commandline {
+      background: #0b1120;
+      border-top: 1px solid #1e293b;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tui-prompt {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+    .tui-input {
+      background: transparent;
+      border: none;
+      color: #f8fafc;
+      font-family: var(--mono);
+      font-size: 12px;
+      flex: 1;
+      outline: none;
+    }
+    .tui-footer {
+      background: #030712;
+      border-top: 1px solid #1e293b;
+      padding: 4px 14px;
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 10px;
+    }
+    .key-badge {
+      background: #1e293b;
+      color: #cbd5e1;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .ansi-green { color: #34d399; }
+    .ansi-cyan { color: #38bdf8; }
+    .ansi-yellow { color: #fbbf24; }
+    .ansi-dim { color: #64748b; }
+    .ansi-magenta { color: #c084fc; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <span>bgssai-build</span>
+      <span class="tag">Grok-Build TUI Mode</span>
+    </div>
+    <nav>
+      <a href="../index.html">控制台原型首页</a>
+      <a href="agents-window.html">切换到 GUI Agents 窗口</a>
+      <a href="editor-agent.html">切换到 IDE 视图</a>
+      <a href="docmost-sync.html">Docmost 同步中心</a>
+      <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+    </nav>
+  </div>
+
+  <div class="app" style="height:760px;">
+    <!-- Titlebar with GUI switch -->
+    <div class="titlebar" style="background:#0b1120;border-color:#1e293b;color:#cbd5e1;">
+      <div class="tb-menus">
+        <span>Terminal</span><span>Session</span><span>ACP</span><span>View</span><span>Help</span>
+      </div>
+      <div class="tb-title">
+        <span class="workspace-pill" style="background:#1e293b;color:#38bdf8;">bgssai-build v2.4 (Rust Ratatui Engine) · grok-tui</span>
+      </div>
+      <div class="tb-right">
+        <a class="docmost-indicator" href="docmost-sync.html" title="Docmost 知识库实时同步中">
+          <span class="dot"></span>
+          <span>Docmost: 4 篇文档已实时同步</span>
+        </a>
+        <a class="ide-btn" href="agents-window.html" style="background:#1e293b;color:#cbd5e1;">切回 GUI 窗口 ↗</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <!-- Full TUI Terminal Canvas -->
+    <div class="terminal-body">
+      <!-- TUI Top Status -->
+      <div class="tui-topbar">
+        <div class="active-status">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;"></span>
+          <b>GROK-BUILD TUI</b> · <span class="ansi-cyan">bgssai-build</span> (<span class="ansi-yellow">feature/ui-optimization</span>)
+        </div>
+        <div>
+          模型: <span class="ansi-magenta">Claude 3.7 Sonnet (Thinking)</span> via <span class="ansi-cyan">Tokenhub-Global</span>
+        </div>
+        <div>
+          ACP 引擎: <span class="ansi-green">Connected</span> · 内存占用: 48.2 MB · 延迟: 14ms
+        </div>
+      </div>
+
+      <!-- TUI Two-Column View -->
+      <div class="tui-content">
+        <!-- Left: Agent Stream & Logs -->
+        <div class="tui-pane-left">
+          <!-- TUI Box 1: User Request & Goal -->
+          <div class="tui-box">
+            <div class="tui-box-title">
+              <span>[1] CURRENT TASK GOAL</span>
+              <span class="ansi-dim">ID: bgssai-task-9021</span>
+            </div>
+            <div style="color:#f8fafc;margin-bottom:4px;">
+              > 参考 Cursor 与 Grok-Build 设计优化 bgssai-build UI，建立研发文档流式回传 Docmost 机制
+            </div>
+            <div class="ansi-dim" style="font-size:11px;">
+              模式: 协作式 Agent 编程 | 规则优先级: AGENTS.md + BGSSAI-Standards.md
+            </div>
+          </div>
+
+          <!-- TUI Box 2: Live Reasoning & Tool Traces -->
+          <div class="tui-box">
+            <div class="tui-box-title">
+              <span>[2] EXECUTION TRACE & REASONING</span>
+              <span class="ansi-green">STREAMING</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
+              <div>
+                <span class="ansi-dim">[18:52:10]</span>
+                <span class="ansi-cyan">TOOL CALL:</span> docmost_mcp.create_page(space="bgssai-build-docs", title="UI Architecture Spec")
+                <span class="ansi-green">-> OK (page_id: 882)</span>
+              </div>
+              <div>
+                <span class="ansi-dim">[18:53:22]</span>
+                <span class="ansi-cyan">TOOL CALL:</span> filesystem.write_file(path="docs/demo-static/pages/agents-window.html")
+                <span class="ansi-green">-> OK (7,135 bytes written)</span>
+              </div>
+              <div>
+                <span class="ansi-dim">[18:54:05]</span>
+                <span class="ansi-cyan">TOOL CALL:</span> docmost_mcp.sync_uml(type="sequence_diagram", target_page=882)
+                <span class="ansi-green">-> OK (Mermaid diagram rendered)</span>
+              </div>
+              <div style="padding-left:14px;border-left:2px solid #38bdf8;color:#94a3b8;">
+                [THINKING] 已完成 Agents Window 居中 composer 及 IDE 视图构建。根据 BGSSAI-Standards.md 全局严禁表情符号，已全部使用 Unicode 语义符号和 SVG 指示器替换。正在构建 TUI 终端模拟器与 MCP 路由视图。
+              </div>
+              <div>
+                <span class="ansi-dim">[18:55:40]</span>
+                <span class="ansi-cyan">STATUS:</span> 所有文件属性命名统一保持严格 snake_case。
+              </div>
+            </div>
+          </div>
+
+          <!-- TUI Box 3: Git Working Tree Diff Summary -->
+          <div class="tui-box">
+            <div class="tui-box-title">
+              <span>[3] WORKING TREE DIFF (GIT STATUS)</span>
+              <span class="ansi-yellow">8 modified / 6 new</span>
+            </div>
+            <div style="font-size:11px;line-height:1.6;">
+              <span class="ansi-green">+ docs/feature/UI_DESIGN_SPEC.md</span><br>
+              <span class="ansi-green">+ docs/demo-static/css/app.css</span><br>
+              <span class="ansi-green">+ docs/demo-static/js/nav.js</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/agents-window.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/agents-chat.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/editor-agent.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/agent-plan.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/agent-review.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/docmost-sync.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/mcp.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/skills.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/rules.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/settings-models.html</span><br>
+              <span class="ansi-green">+ docs/demo-static/pages/tui-terminal.html</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Realtime Docmost Sync Pane -->
+        <div class="tui-pane-right">
+          <div class="tui-box" style="border-color:#2563eb;">
+            <div class="tui-box-title" style="color:#93c5fd;">
+              <span>DOCMOST SYNC CHANNEL</span>
+              <span class="ansi-green">LIVE STREAM</span>
+            </div>
+            <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">
+              空间: <b>bgssai-build-docs</b> | 状态: 实时传输中
+            </div>
+
+            <!-- Docmost Live Artifacts in TUI -->
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="background:#0f172a;border:1px solid #1e293b;padding:8px 10px;border-radius:4px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                  <b style="color:#f8fafc;">1. PRD 需求规格说明书</b>
+                  <span class="ansi-green">已发布 v1.0</span>
+                </div>
+                <div class="ansi-dim" style="font-size:10px;">包含: 功能矩阵、三端协同约束、Tokenhub 架构路由</div>
+              </div>
+
+              <div style="background:#0f172a;border:1px solid #1e293b;padding:8px 10px;border-radius:4px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                  <b style="color:#f8fafc;">2. HLD 概要设计说明书</b>
+                  <span class="ansi-green">已发布 v1.0</span>
+                </div>
+                <div class="ansi-dim" style="font-size:10px;">包含: Rust Ratatui TUI + GUI 双核架构，ACP 协议规范</div>
+              </div>
+
+              <div style="background:#0f172a;border:1px solid #1e293b;padding:8px 10px;border-radius:4px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                  <b style="color:#f8fafc;">3. LLD 详细设计与 UML 建模</b>
+                  <span class="ansi-cyan">正在生成...</span>
+                </div>
+                <div class="ansi-dim" style="font-size:10px;">包含: 类图、时序图、泳道图、状态机流转模型</div>
+              </div>
+            </div>
+
+            <!-- TUI ASCII Diagram Preview -->
+            <div style="margin-top:10px;border-top:1px dashed #1e293b;padding-top:8px;">
+              <div class="ansi-yellow" style="font-size:10px;margin-bottom:4px;">[ASCII ARCHITECTURE MAP]</div>
+              <pre style="margin:0;font-size:10px;color:#a5f3fc;line-height:1.2;background:#030712;padding:6px;border-radius:3px;">
++------------------------------------------------+
+|  User Command / IDE GUI / TUI Prompt           |
++------------------------------------------------+
+          |                      |
+          v                      v
++------------------+   +-------------------------+
+|  Rust Grok Engine|-->| bgssai-docmost MCP Stream|
+|  (TUI/Ratatui)   |   | -> PRD / HLD / LLD Sync |
++------------------+   +-------------------------+
+          |
+          v
++------------------------------------------------+
+|  bgssai-tokenhub (Global / CN Native Models)   |
++------------------------------------------------+
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TUI Bottom Command Prompt -->
+      <div class="tui-commandline">
+        <span class="tui-prompt">bgssai-build:❯</span>
+        <input class="tui-input" type="text" value="/docmost-sync --verify-all" placeholder="输入命令或提示词 (例如: /plan, /review, /simplify, @files, @docmost)...">
+        <span class="ansi-green" style="font-size:11px;">[Ready]</span>
+      </div>
+
+      <!-- TUI Footer Keybindings -->
+      <div class="tui-footer">
+        <div>
+          <span><span class="key-badge">Enter</span>执行</span>
+          <span><span class="key-badge">Tab</span>补全</span>
+          <span><span class="key-badge">Ctrl+C</span>中断</span>
+          <span><span class="key-badge">Ctrl+P</span>文件检索</span>
+        </div>
+        <div>
+          <span><span class="key-badge">F2</span>打开 Docmost Web</span>
+          <span><span class="key-badge">F5</span>Diff 审查</span>
+          <span><span class="key-badge">F9</span>切换 GUI 窗口</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>页面跳转流转图与交互矩阵 · bgssai-build</title>
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .flow-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+    .step-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border-2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--accent-soft);
+      font-weight: 500;
+      margin-right: 6px;
+    }
+    .link-pill:hover { background: var(--bg-hover); }
+    table.matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+    table.matrix-table th, table.matrix-table td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    table.matrix-table th {
+      background: var(--bg-elev-2);
+      color: var(--text);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="page" style="align-items:stretch;">
+  <div class="gallery-page">
+    <div class="proto-bar" style="max-width:none;margin:12px 0 16px;">
+      <div class="brand">
+        <span>bgssai-build</span>
+        <span class="tag">PAGE-FLOW</span>
+      </div>
+      <nav>
+        <a href="index.html">原型画廊首页</a>
+        <a href="pages/agents-window.html">Agents 主页</a>
+        <a href="pages/docmost-sync.html">Docmost 同步中心</a>
+        <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+      </nav>
+    </div>
+
+    <h1 style="font-size:20px;font-weight:700;margin-bottom:6px;">bgssai-build 页面状态流转图与交互矩阵</h1>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:20px;">
+      规范 Cursor GUI 视窗、Grok-Build 终端 TUI 视窗与 Docmost 实时研发同步之间的状态跃迁与触发机制。
+    </p>
+
+    <!-- Visual Journey -->
+    <div class="flow-card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:16px;">一、端到端研发透明化闭环 (Core User Journey)</div>
+
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">发起需求或架构任务</div>
+          <div class="step-desc">
+            用户在 <a class="link-pill" href="pages/agents-window.html">agents-window.html</a> 居中 Composer 输入提示词，选择 Tokenhub 目标模型（如 Claude 3.7 或 DeepSeek-R1），或者按下 <code>Shift+Tab</code> 进入 <a class="link-pill" href="pages/agent-plan.html">agent-plan.html</a> 进行多阶段需求拆解。
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">自动创建 Docmost 空间与 PRD/HLD 说明书</div>
+          <div class="step-desc">
+            Agent 通过 <code>bgssai-docmost MCP</code> 自动在目标文档库创建对应空间及文档页面，生成软件工程标准说明书（需求说明、概要设计、技术选型）。
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">实时执行、推演与 UML 流式同步</div>
+          <div class="step-desc">
+            在 <a class="link-pill" href="pages/agents-chat.html">agents-chat.html</a> 中，用户可看到工具调用追踪流（Tool Calling）。与此同时，Agent 将生成的 6 类 Mermaid UML 图表（类图、时序图、泳道图等）直接写入 <a class="link-pill" href="pages/docmost-sync.html">docmost-sync.html</a>，完全杜绝黑盒编程。
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">双轨审核 (Diff Review + 架构图核验)</div>
+          <div class="step-desc">
+            代码执行完成后跳转至 <a class="link-pill" href="pages/agent-review.html">agent-review.html</a>。左侧呈现代码行级 Diff，右侧呈现 Docmost 最新的 UML 类图与接口状态。用户确认无误后点击「批准并合并至 develop」。
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">无缝切入 TUI 终端模式</div>
+          <div class="step-desc">
+            在任何时刻点击快捷键 <code>F9</code> 或点击顶栏，即可瞬时切入 <a class="link-pill" href="pages/tui-terminal.html">tui-terminal.html</a>，在纯键盘终端环境下体验 Grok-Build 风格的轻量高速 TUI 流式推演。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transition Matrix Table -->
+    <div class="flow-card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;">二、页面跳转与状态触发矩阵 (Routing Matrix)</div>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="width:160px;">起始页面 (Source)</th>
+            <th style="width:180px;">用户操作 / 触发事件</th>
+            <th style="width:160px;">目标页面 (Target)</th>
+            <th>交互说明与数据传递</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>agents-window.html</td>
+            <td>回车提交 Prompt</td>
+            <td>agents-chat.html</td>
+            <td>携带 prompt 与 model_id，开启 Agent 推演流并在后台激活 Docmost MCP 同步通道</td>
+          </tr>
+          <tr>
+            <td>agents-window.html</td>
+            <td>点击 Plan 或 Shift+Tab</td>
+            <td>agent-plan.html</td>
+            <td>切换到多阶段工程拆解模式，生成 PRD 需求文档与流程图</td>
+          </tr>
+          <tr>
+            <td>agents-chat.html</td>
+            <td>代码生成完成 / 点击 Files Changed</td>
+            <td>agent-review.html</td>
+            <td>载入 git diff 树与对应的 Docmost 架构类图进行双轨对照核验</td>
+          </tr>
+          <tr>
+            <td>agents-chat.html / 全局</td>
+            <td>点击 Docmost 同步胶囊</td>
+            <td>docmost-sync.html</td>
+            <td>打开知识库全屏实时同步看板，查看 PRD/HLD/LLD 及 6 类 UML 图表</td>
+          </tr>
+          <tr>
+            <td>全局 (任意视窗)</td>
+            <td>点击右上角 IDE 视图 ↗</td>
+            <td>editor-agent.html</td>
+            <td>进入经典深色 VS Code 布局，左侧目录树与代码区，右侧 Agent 对话辅助</td>
+          </tr>
+          <tr>
+            <td>全局 (任意视窗)</td>
+            <td>点击左侧菜单「配置 & 扩展」</td>
+            <td>mcp.html</td>
+            <td>管理 MCP 工具协议，可进一步切换至 Skills、Rules、Tokenhub 设置</td>
+          </tr>
+          <tr>
+            <td>全局 (任意视窗)</td>
+            <td>点击左侧菜单「TUI 终端」或按 F9</td>
+            <td>tui-terminal.html</td>
+            <td>切入 Grok-Build Rust Ratatui 终端模式，全键盘操作与流式输出</td>
+          </tr>
+          <tr>
+            <td>agent-review.html</td>
+            <td>点击「批准并合并到 develop」</td>
+            <td>agents-window.html</td>
+            <td>执行 git merge，自动在 Docmost 归档版本 Snapshot，回到准备就绪状态</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

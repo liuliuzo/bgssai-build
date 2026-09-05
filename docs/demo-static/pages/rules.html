@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rules 规则与规范 · bgssai-build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <span>bgssai-build</span>
+      <span class="tag">Customize</span>
+    </div>
+    <nav>
+      <a href="../index.html">控制台原型首页</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="docmost-sync.html">Docmost 同步中心</a>
+      <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Sync</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <button class="icon-btn" type="button" title="Back" onclick="history.back()">‹</button>
+        <button class="icon-btn" type="button" title="Forward" onclick="history.forward()">›</button>
+      </div>
+      <div class="tb-title">
+        <span class="workspace-pill">bgssai-build [develop]</span>
+      </div>
+      <div class="tb-right">
+        <a class="docmost-indicator" href="docmost-sync.html" title="Docmost 知识库实时同步中">
+          <span class="dot"></span>
+          <span>Docmost: 已连接</span>
+        </a>
+        <a class="ide-btn" href="editor-agent.html">IDE 视图 <span style="opacity:0.6">↗</span></a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Left Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="aw-collapse" type="button" title="Collapse">☰</button>
+          <a class="new-chat" href="agents-window.html"><span>+</span> 新任务</a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">✦</span>Agents 任务</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan 规划</a>
+          <a href="agent-review.html"><span class="ico">✓</span>Review 审查</a>
+          <a href="docmost-sync.html"><span class="ico">▦</span>Docmost 同步</a>
+          <a href="rules.html" class="active"><span class="ico">⚙</span>配置 & 扩展</a>
+          <a href="tui-terminal.html"><span class="ico">>_</span>TUI 终端</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">当前活跃仓库</div>
+          <a class="repo active" href="agents-window.html">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-build</span><span class="sub">feature/ui-cursor</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-docmost</span><span class="sub">develop</span></span>
+          </a>
+          <div class="side-label" style="margin-top:16px;">最近 Agent 记录</div>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="meta"><span class="name">UI 优化与 Docmost 协同</span><span class="sub">2 分钟前 · 8 个文件</span></span>
+            <span class="time">8m</span>
+          </a>
+        </div>
+        <div class="aw-foot">
+          <a class="user" href="settings-models.html"><span class="avatar">B</span><b>BGSSAI Admin</b></a>
+          <a class="icon-btn" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section class="main">
+        <header class="header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h1 style="font-size:15px;font-weight:600;">扩展与自定义 (Customize)</h1>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn" type="button">+ 添加规则文件</button>
+            <a class="btn primary" href="agents-window.html">返回对话</a>
+          </div>
+        </header>
+
+        <div class="settings" style="padding:20px 24px;overflow-y:auto;flex:1;">
+          <div class="chips-row">
+            <a class="chip-tab" href="skills.html">Skills 技能</a>
+            <a class="chip-tab" href="mcp.html">MCP 工具协议</a>
+            <a class="chip-tab on" href="rules.html">Rules 规范</a>
+            <a class="chip-tab" href="settings-models.html">Tokenhub 模型配置</a>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Rules 规则体系</div>
+            <div style="font-size:12px;color:var(--text-2);">
+              在 Agent 编写代码、推演方案与输出文档时，严格注入并执行如下规则指令，确保全流程符合企业级工程标准。
+            </div>
+          </div>
+
+          <div class="s-card">
+            <!-- AGENTS.md -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>AGENTS.md</b>
+                  <span class="badge" style="font-size:11px;">Workspace Root</span>
+                  <span style="font-size:11px;color:var(--brand);background:var(--accent-dim);padding:1px 6px;border-radius:4px;">高优先级</span>
+                </div>
+                <span>仓库全局 Agent 行为守则：定义研发角色分工、Docmost 协同规范、架构分层以及变更审核约束</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  生效路径: <code>/home/github/bgssai-build/AGENTS.md</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">查看内容</button>
+                <button class="btn btn-sm" type="button">在 IDE 编辑</button>
+              </div>
+            </div>
+
+            <!-- BGSSAI-Standards.md -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>BGSSAI-Standards.md</b>
+                  <span class="badge ok" style="font-size:11px;">Global Standard</span>
+                  <span style="font-size:11px;color:var(--danger);background:var(--danger-dim);padding:1px 6px;border-radius:4px;">严禁 Emoji</span>
+                </div>
+                <span>全局工程规范：严禁使用表情符号及装饰性符号；严禁直接提交 main/develop；属性命名统一使用 snake_case；汇报只保留高阶宏观进度</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  生效范围: 所有 bgssai 旗下前后端项目
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">查看内容</button>
+                <button class="btn btn-sm" type="button">检查合规</button>
+              </div>
+            </div>
+
+            <!-- Architecture & Docmost Sync Rules -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>Docmost 实时同步规范 (Docmost-Sync-Rule)</b>
+                  <span class="badge" style="font-size:11px;">R&D Rule</span>
+                </div>
+                <span>透明研发核心守则：凡修改超过 50 行或新增模块，Agent 必须先在 Docmost 对应空间更新 PRD、HLD、LLD 及 Mermaid UML 图，严禁黑盒式提交代码</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  关联工具: <code>bgssai-docmost MCP</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">查看配置</button>
+              </div>
+            </div>
+
+            <!-- User Preferences -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>用户个人编码偏好 (User Rules)</b>
+                  <span class="badge" style="font-size:11px;">User Profile</span>
+                </div>
+                <span>偏好简洁直观的错误处理；优先使用 Rust 静态类型；代码注释使用专业中文；界面文案符合专业工程师审美</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  生效路径: <code>~/.bgssai/rules/user_profile.md</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">编辑偏好</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCP 服务器 · bgssai-build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <span>bgssai-build</span>
+      <span class="tag">Customize</span>
+    </div>
+    <nav>
+      <a href="../index.html">控制台原型首页</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="docmost-sync.html">Docmost 同步中心</a>
+      <button class="theme-btn" id="theme-toggle" type="button">浅色 / 深色</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Sync</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <button class="icon-btn" type="button" title="Back" onclick="history.back()">‹</button>
+        <button class="icon-btn" type="button" title="Forward" onclick="history.forward()">›</button>
+      </div>
+      <div class="tb-title">
+        <span class="workspace-pill">bgssai-build [develop]</span>
+      </div>
+      <div class="tb-right">
+        <a class="docmost-indicator" href="docmost-sync.html" title="Docmost 知识库实时同步中">
+          <span class="dot"></span>
+          <span>Docmost: 已连接</span>
+        </a>
+        <a class="ide-btn" href="editor-agent.html">IDE 视图 <span style="opacity:0.6">↗</span></a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Left Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="aw-collapse" type="button" title="Collapse">☰</button>
+          <a class="new-chat" href="agents-window.html"><span>+</span> 新任务</a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">✦</span>Agents 任务</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan 规划</a>
+          <a href="agent-review.html"><span class="ico">✓</span>Review 审查</a>
+          <a href="docmost-sync.html"><span class="ico">▦</span>Docmost 同步</a>
+          <a href="mcp.html" class="active"><span class="ico">⚙</span>配置 & 扩展</a>
+          <a href="tui-terminal.html"><span class="ico">>_</span>TUI 终端</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">当前活跃仓库</div>
+          <a class="repo active" href="agents-window.html">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-build</span><span class="sub">feature/ui-cursor</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-docmost</span><span class="sub">develop</span></span>
+          </a>
+          <a class="repo" href="#">
+            <span class="fold">⌂</span>
+            <span class="meta"><span class="name">bgssai-tokenhub</span><span class="sub">main</span></span>
+          </a>
+          <div class="side-label" style="margin-top:16px;">最近 Agent 记录</div>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="meta"><span class="name">UI 优化与 Docmost 协同</span><span class="sub">2 分钟前 · 8 个文件</span></span>
+            <span class="time">8m</span>
+          </a>
+        </div>
+        <div class="aw-foot">
+          <a class="user" href="settings-models.html"><span class="avatar">B</span><b>BGSSAI Admin</b></a>
+          <a class="icon-btn" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section class="main">
+        <header class="header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h1 style="font-size:15px;font-weight:600;">扩展与自定义 (Customize)</h1>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn" type="button">+ 添加 MCP 服务器</button>
+            <a class="btn primary" href="docmost-sync.html">查看 Docmost 同步</a>
+          </div>
+        </header>
+
+        <div class="settings" style="padding:20px 24px;overflow-y:auto;flex:1;">
+          <div class="chips-row">
+            <a class="chip-tab" href="skills.html">Skills 技能</a>
+            <a class="chip-tab on" href="mcp.html">MCP 工具协议</a>
+            <a class="chip-tab" href="rules.html">Rules 规范</a>
+            <a class="chip-tab" href="settings-models.html">Tokenhub 模型配置</a>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Model Context Protocol (MCP) 服务器</div>
+            <div style="font-size:12px;color:var(--text-2);">
+              bgssai-build 作为标准 MCP Client，挂载工具服务支持代码生成、文件流管理、原生模型路由与 Docmost 研发工程文档输出。
+            </div>
+          </div>
+
+          <div class="s-card">
+            <!-- Docmost MCP -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>bgssai-docmost</b>
+                  <span class="badge ok" style="font-size:11px;">Active · Connected</span>
+                  <span style="font-size:11px;color:var(--accent-soft);background:var(--accent-dim);padding:1px 6px;border-radius:4px;">Core R&D Stream</span>
+                </div>
+                <span>协议: stdio · /usr/local/bin/bgssai-docmost-mcp --space-id bgssai-build-docs</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  提供研发透明化输出能力。已注入 6 项原生工具:
+                  <code style="background:var(--bg-elev-2);padding:2px 4px;border-radius:3px;margin:0 2px;">docmost_list_spaces</code>
+                  <code style="background:var(--bg-elev-2);padding:2px 4px;border-radius:3px;margin:0 2px;">docmost_create_page</code>
+                  <code style="background:var(--bg-elev-2);padding:2px 4px;border-radius:3px;margin:0 2px;">docmost_update_page</code>
+                  <code style="background:var(--bg-elev-2);padding:2px 4px;border-radius:3px;margin:0 2px;">docmost_sync_uml</code>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">测试连通性</button>
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Tokenhub Global -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>bgssai-tokenhub-global</b>
+                  <span class="badge ok" style="font-size:11px;">Active · SSE</span>
+                </div>
+                <span>原生 API 中枢: https://api.global.tokenhub.bgssai.com/v1 (Claude 3.7 Sonnet / GPT-4.5 / Grok-3)</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  提供国际主流大模型原生调用，具备 Reasoning Tokens、Thinking Stream 以及 Extended Output 上下文支持。
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">测试连通性</button>
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Tokenhub CN -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>bgssai-tokenhub-cn</b>
+                  <span class="badge ok" style="font-size:11px;">Active · SSE</span>
+                </div>
+                <span>本土 API 中枢: https://api.cn.tokenhub.bgssai.com/v1 (DeepSeek-R1 / Qwen-2.5-Max)</span>
+                <div style="font-size:12px;color:var(--text-2);margin-top:4px;">
+                  提供中国大陆主流模型原生高速通道，支持深度推演与私有代码安全保障。
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button">测试连通性</button>
+                <button class="btn btn-sm" type="button">配置</button>
+              </div>
+            </div>
+
+            <!-- Filesystem -->
+            <div class="s-row" style="align-items:flex-start;">
+              <div class="lab" style="gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <b>filesystem-tools</b>
+                  <span class="badge ok" style="font-size:11px;">Built-in</span>
+                </div>
+                <span>内置 Rust 高性能沙箱文件系统读写，集成 AST 解析与快速语法树重构工具</span>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-sm" type="button" disabled style="opacity:0.6;">内置只读</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration File Preview -->
+          <div style="margin-top:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <div style="font-weight:600;">配置文件: <code style="font-size:12px;color:var(--accent-soft);">.bgssai/mcp_servers.json</code></div>
+              <button class="btn btn-sm" type="button">在 IDE 中编辑</button>
+            </div>
+            <pre style="background:var(--bg-editor);color:#cbd5e1;padding:12px 16px;border-radius:6px;font-family:var(--mono);font-size:11px;overflow-x:auto;margin:0;line-height:1.5;">{
+  "mcp_servers": {
+    "bgssai_docmost": {
+      "command": "bgssai-docmost-mcp",
+      "args": ["--space", "bgssai-build-docs"],
+      "env": {
+        "DOCMOST_API_URL": "http://127.0.0.1:3000/api/v1",
+        "DOCMOST_API_TOKEN": "pat_sec_99a81e..."
+      }
+    },
+    "bgssai_tokenhub_global": {
+      "url": "https://api.global.tokenhub.bgssai.com/mcp/sse",
+      "headers": {
+        "Authorization": "Bearer sk-th-global-789..."
+      }
+    }
+  }
+}</pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

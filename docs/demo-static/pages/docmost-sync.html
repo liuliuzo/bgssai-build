@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docmost Sync Center · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="agents-chat.html">对话执行</a>
+      <a href="editor-agent.html">经典 IDE</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>View</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-title">bgssai-build ↔ bgssai-docmost 研发协同中心</div>
+      <div class="tb-right">
+        <a class="btn btn-sm btn-primary" href="https://docmost.bgssai.com" target="_blank">打开 Docmost 网页 ↗</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <a class="new-chat" href="agents-window.html">
+            <span style="font-weight:700;">+</span> New Chat
+          </a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">⌂</span>Home</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan & PRD</a>
+          <a href="docmost-sync.html" class="active"><span class="ico">✦</span>Docmost Sync</a>
+          <a href="mcp.html"><span class="ico">▦</span>MCP Servers</a>
+          <a href="skills.html"><span class="ico">»</span>Skills (/skills)</a>
+          <a href="rules.html"><span class="ico">§</span>Rules (AGENTS.md)</a>
+        </nav>
+        <div class="aw-list">
+          <div class="side-label">Connected Spaces</div>
+          <div class="repo-item active">
+            <span>§</span>
+            <span class="name">BGSSAI Build 研发文档</span>
+            <span class="tag">Space #4</span>
+          </div>
+          <div class="repo-item">
+            <span>§</span>
+            <span class="name">Docmost Core 规范</span>
+            <span class="tag">Space #1</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Sync Dashboard -->
+      <section class="main" style="padding:24px 36px; overflow-y:auto;">
+        <div style="max-width:920px; margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+            <div>
+              <h2 style="margin:0 0 6px; font-size:20px;">Docmost 研发知识库协同中心</h2>
+              <p style="color:var(--text-2); margin:0; font-size:13px;">
+                管理终端 Agent 向云端知识库自动推送软件工程文档与 UML 原生架构图的状态。
+              </p>
+            </div>
+            <a class="btn btn-sm" href="#">立即触发全量同步</a>
+          </div>
+
+          <!-- Connection Status Card -->
+          <div class="s-card">
+            <div class="s-row">
+              <div class="lab">
+                <b>服务接入点 (BGSSAI_DOCMOST_URL)</b>
+                <span>https://docmost.bgssai.com (本地代理: http://127.0.0.1:8080)</span>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.1); color:var(--ok);">已连接 (HTTP 200)</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>个人访问令牌 (BGSSAI_DOCMOST_TOKEN)</b>
+                <span>pat_usr_9a87f2e1... (SHA-256 哈希校验通过，属主：留留赵)</span>
+              </div>
+              <a class="btn btn-sm" href="https://docmost.bgssai.com/tokens" target="_blank">更换令牌 ↗</a>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>MCP 协议状态 (JSON-RPC 2.0)</b>
+                <span>已注册工具：list_spaces, list_pages, get_page, create_page, update_page, get_templates</span>
+              </div>
+              <span class="badge" style="background:rgba(16,185,129,0.1); color:var(--ok);">6 Tools Ready</span>
+            </div>
+          </div>
+
+          <!-- Synchronized Engineering Documents & UML Diagrams Matrix -->
+          <h3 style="font-size:15px; margin:24px 0 12px;">已自动同步沉淀的软件工程说明书与 UML 模型</h3>
+          <div class="s-card">
+            <div class="s-row">
+              <div class="lab">
+                <b>需求规格说明书 (PRD) — 用户多渠道认证</b>
+                <span>包含业务背景、OPC 场景用例表 (UC-01~03)、验收标准</span>
+              </div>
+              <span class="kbd">v1 #1024</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>系统概要设计说明书 (HLD) — 整体架构拓扑图</b>
+                <span>包含系统建设目标、拓扑图 (Flowchart)、跨端协作泳道图 (Swimlane)</span>
+              </div>
+              <span class="kbd">v1 #1025</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>模块详细设计说明书 (LLD) — 认证时序与类图</b>
+                <span>包含类设计 (ClassDiagram)、乐观锁时序 (SequenceDiagram)、状态迁移 (StateDiagram)</span>
+              </div>
+              <span class="kbd">v2 #1026</span>
+            </div>
+            <div class="s-row">
+              <div class="lab">
+                <b>数据库与持久化设计 (DB Design) — 实体关系模型</b>
+                <span>数据字典、索引优化策略与实体关系图 (ER Diagram)</span>
+              </div>
+              <span class="kbd">v1 #1027</span>
+            </div>
+          </div>
+
+          <!-- Live UML Architectural Model Preview -->
+          <div class="docmost-card" style="margin-top:20px;">
+            <div class="docmost-card-head">
+              <span class="title">✦ 当前项目活跃类图 (已自动落库至 Docmost 知识空间 #4)</span>
+              <span class="kbd">Class Diagram</span>
+            </div>
+            <div class="uml-diagram-box">
+classDiagram<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class UserAuthService {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+loginCode(LoginCodeRequest) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+loginPassword(ReqUserLogin) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+oauthLogin(OAuthLoginRequest) RespUserLogin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class McpToolService {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+listTools() ArrayNode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+call(name, args) String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class DocmostPage {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+Long id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+String title<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+String contentMd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+Integer version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;McpToolService --> UserAuthService : 鉴权调用<br>
+&nbsp;&nbsp;&nbsp;&nbsp;McpToolService --> DocmostPage : 实体同步
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>

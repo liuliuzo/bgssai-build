@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IDE Editor + Agent Split · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="docmost-sync.html">Docmost 协同</a>
+      <a href="tui-terminal.html">终端 TUI</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Go</span><span>Terminal</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-title">UserAuthService.java — bgssai-build [develop]</div>
+      <div class="tb-right">
+        <a class="docmost-status-pill" href="docmost-sync.html">
+          <span style="font-size:8px;">●</span> Docmost Synced
+        </a>
+        <a class="mode-toggle-btn" href="agents-window.html">Agents 独立窗口 ↗</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <!-- Layout: Activity Bar + File Tree + Code Editor + Right Agent Pane -->
+    <div class="editor-layout">
+      <!-- VS Code Activity Bar -->
+      <aside class="activity-bar">
+        <a href="#" class="active" title="Explorer">§</a>
+        <a href="#" title="Search">⌕</a>
+        <a href="#" title="Source Control">⎇</a>
+        <a href="docmost-sync.html" title="Docmost Sync" style="color:var(--brand);">✦</a>
+        <a href="mcp.html" title="MCP Tools">▦</a>
+        <span style="flex:1;"></span>
+        <a href="settings-models.html" title="Settings">⚙</a>
+      </aside>
+
+      <!-- File Explorer Tree -->
+      <div class="file-tree">
+        <div class="side-label">Explorer: BGSSAI-BUILD</div>
+        <div class="tree-item active">⌂ src/main/java</div>
+        <div class="tree-item" style="padding-left:24px;">⌂ auth</div>
+        <div class="tree-item active" style="padding-left:36px; color:var(--text);">§ UserAuthService.java</div>
+        <div class="tree-item" style="padding-left:36px;">§ UserAuthMapper.java</div>
+        <div class="tree-item" style="padding-left:24px;">⌂ download</div>
+        <div class="tree-item" style="padding-left:36px;">§ InstallScriptController.java</div>
+        <div class="tree-item" style="padding-left:24px;">⌂ mcp</div>
+        <div class="tree-item" style="padding-left:36px;">§ McpToolService.java</div>
+        <div class="tree-item" style="padding-left:12px;">⌂ docs</div>
+        <div class="tree-item" style="padding-left:24px;">§ PRODUCT_VISION.md</div>
+        <div class="tree-item" style="padding-left:24px;">§ AGENTS.md</div>
+      </div>
+
+      <!-- Center Code Area -->
+      <main class="code-area">
+        <div class="editor-tabs">
+          <div class="editor-tab">
+            <span>UserAuthService.java</span>
+            <span style="font-size:10px; opacity:0.6; cursor:pointer;">✕</span>
+          </div>
+          <div class="editor-tab" style="background:transparent; color:#888;">
+            <span>McpToolService.java</span>
+          </div>
+        </div>
+
+        <div class="code-lines">
+          <pre style="margin:0; font-family:var(--mono); line-height:1.6;">
+<span style="color:#6a9955;">// BGSSAI User Multi-Auth Service with Docmost Engineering Hook</span>
+<span style="color:#569cd6;">package</span> com.bgssai.docmost.auth.service;
+
+<span style="color:#569cd6;">import</span> com.bgssai.docmost.common.exception.BizException;
+<span style="color:#569cd6;">import</span> org.springframework.stereotype.Service;
+
+<span style="color:#569cd6;">@Service</span>
+<span style="color:#569cd6;">public class</span> <span style="color:#4ec9b0;">UserAuthService</span> {
+
+<span class="diff-added">+    // AI 自动生成的验证码与多渠道认证契约</span>
+<span class="diff-added">+    public RespUserLogin loginCode(LoginCodeRequest req, HttpServletRequest httpReq) {</span>
+<span class="diff-added">+        validateVerifyCode(req.account(), req.code());</span>
+<span class="diff-added">+        SysUser user = getOrCreateUser(req.account());</span>
+<span class="diff-added">+        return completeLogin(user, httpReq);</span>
+<span class="diff-added">+    }</span>
+
+<span style="color:#569cd6;">    public</span> RespUserLogin loginPassword(ReqUserLogin req) {
+<span class="diff-removed">-        // 旧逻辑：未做状态冻结校验与统一审计</span>
+<span class="diff-added">+        checkUserStatus(user); // 拦截已封禁用户</span>
+        return doLogin(req);
+    }
+}
+          </pre>
+        </div>
+      </main>
+
+      <!-- Right Side Agent Pane (Cursor Style) -->
+      <aside class="side-agent-pane">
+        <div class="titlebar" style="border-left:none; border-right:none;">
+          <div style="font-weight:600; font-size:12px;">BGSSAI Agent</div>
+          <span style="flex:1;"></span>
+          <a class="docmost-status-pill" href="docmost-sync.html" style="font-size:10px;">Docmost Synced</a>
+          <a class="icon-btn" href="agents-window.html" title="Pop out into Window">⧉</a>
+        </div>
+
+        <div class="thread" style="padding:16px;">
+          <div class="msg">
+            <div class="progress-pill">Generated PRD, HLD & UML diagrams</div>
+            <div class="bubble">
+              已将 <code>UserAuthService</code> 的行内变更同步至代码库，同时在 Docmost 建立了类结构图与认证时序图。
+            </div>
+            <div class="docmost-card">
+              <div class="docmost-card-head">
+                <span class="title">✦ Docmost 知识库状态</span>
+                <a class="btn btn-sm" href="docmost-sync.html">打开图纸 ↗</a>
+              </div>
+              <div style="font-size:11px; color:var(--text-2);">
+                已更新：模块详细设计 LLD (v2 #1026)<br>
+                包含 UML 类图与乐观锁并发时序。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline Followup -->
+        <div class="followup" style="padding:12px;">
+          <div class="followup-box">
+            <textarea placeholder="Ctrl+K 或输入追问 /doc /simplify..." rows="2"></textarea>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+              <span style="font-size:11px; color:var(--text-3);">Claude 3.7 Sonnet</span>
+              <a class="btn btn-sm btn-primary" href="#">Submit</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>

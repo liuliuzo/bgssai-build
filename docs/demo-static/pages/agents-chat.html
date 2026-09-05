@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Thread & Docmost Sync · BGSSAI Build</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="proto-bar">
+    <div class="brand">
+      <b>BGSSAI Build</b>
+      <span class="tag">Cursor + Grok-Build 设计</span>
+    </div>
+    <nav>
+      <a href="../index.html">原型概览</a>
+      <a href="agents-window.html">Agents 主页</a>
+      <a href="editor-agent.html">经典 IDE</a>
+      <a href="docmost-sync.html">Docmost 协同</a>
+      <button class="theme-btn" onclick="toggleTheme()">Theme: Light</button>
+    </nav>
+  </div>
+
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="tb-menus">
+        <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Agent</span><span>Docmost</span><span>Help</span>
+      </div>
+      <div class="tb-nav">
+        <a class="icon-btn" href="agents-window.html" title="Back to Home">‹</a>
+        <button class="icon-btn" type="button" title="Forward">›</button>
+      </div>
+      <div class="tb-title">User Multi-Auth & Docmost UML Sync — Task #248</div>
+      <div class="tb-right">
+        <a class="docmost-status-pill" href="docmost-sync.html">
+          <span style="font-size:8px;">●</span> Docmost Synced (v2)
+        </a>
+        <a class="mode-toggle-btn" href="agent-review.html">审查 Diff & 架构 ↗</a>
+        <div class="win-ctrls" aria-hidden="true"><i>—</i><i>□</i><i class="close">✕</i></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- Sidebar -->
+      <aside class="aw-side">
+        <div class="aw-side-top">
+          <button class="icon-btn" type="button" title="Collapse Sidebar">☰</button>
+          <a class="new-chat" href="agents-window.html">
+            <span style="font-weight:700;">+</span> New Chat
+          </a>
+        </div>
+        <nav class="aw-nav">
+          <a href="agents-window.html"><span class="ico">⌂</span>Home</a>
+          <a href="agent-plan.html"><span class="ico">§</span>Plan & PRD</a>
+          <a href="docmost-sync.html"><span class="ico">✦</span>Docmost Sync</a>
+          <a href="mcp.html"><span class="ico">▦</span>MCP Servers</a>
+          <a href="skills.html"><span class="ico">»</span>Skills (/skills)</a>
+          <a href="rules.html"><span class="ico">§</span>Rules (AGENTS.md)</a>
+        </nav>
+
+        <div class="aw-list">
+          <div class="side-label"><span>Active Sessions</span></div>
+          <a class="chat-row active" href="agents-chat.html">
+            <span class="name">User Multi-Auth & Docmost UML sync</span>
+            <span class="time">Just now</span>
+          </a>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="name">Tokenhub stream routing & failover</span>
+            <span class="time">1h</span>
+          </a>
+          <a class="chat-row" href="agents-chat.html">
+            <span class="name">Refactor ratatui bottom dock</span>
+            <span class="time">1d</span>
+          </a>
+        </div>
+
+        <div class="aw-foot">
+          <div class="user-chip">
+            <span class="avatar">留</span>
+            <span>留留赵 (OPC)</span>
+          </div>
+          <a class="icon-btn" href="settings-models.html" title="Settings">⚙</a>
+        </div>
+      </aside>
+
+      <!-- Main Chat Area -->
+      <section class="main">
+        <div class="thread">
+          <!-- User Prompt -->
+          <div class="msg user">
+            <div class="bubble">
+              实现用户多端安全认证体系（支持手机号验证码、邮箱及第三方授权），同时请把软件工程规范文档（PRD需求规格、HLD概要设计、LLD详细设计）及类图、时序图、泳道图直接同步输出到 Docmost 知识库中。
+            </div>
+          </div>
+
+          <!-- Agent Response -->
+          <div class="msg">
+            <div class="progress-pill">
+              <span>»</span> Analyzed codebase · Executed 2 MCP calls to Docmost · Modified 4 files
+            </div>
+
+            <div class="bubble">
+              已完成用户多端认证实现，并通过 MCP 协议将完整的软件工程说明书与 UML 原生 Mermaid 架构图写入了 <strong>bgssai-docmost</strong> 知识库。
+              所有类间关系、时序调用及状态机均已沉淀，绝无黑盒盲区。
+            </div>
+
+            <!-- Docmost Engineering Sync Card (BGSSAI Highlight) -->
+            <div class="docmost-card">
+              <div class="docmost-card-head">
+                <span class="title">✦ Docmost 软件工程文档与架构图同步沉淀</span>
+                <div class="actions">
+                  <a class="btn btn-sm btn-primary" href="docmost-sync.html">在 Docmost 中查看完整图纸 ↗</a>
+                </div>
+              </div>
+              <div class="doc-item-row">
+                <span class="type">需求规格说明书 (PRD)</span>
+                <span>涵盖多渠道认证用例、安全边界与验收标准</span>
+                <span class="status">✓ 已落库 (v1 #1024)</span>
+              </div>
+              <div class="doc-item-row">
+                <span class="type">系统概要设计 (HLD)</span>
+                <span>整体认证拓扑图 (Flowchart) + 跨角色泳道图 (Swimlane)</span>
+                <span class="status">✓ 已落库 (v1 #1025)</span>
+              </div>
+              <div class="doc-item-row">
+                <span class="type">模块详细设计 (LLD)</span>
+                <span>认证类图 (ClassDiagram) + 乐观锁时序图 (SequenceDiagram)</span>
+                <span class="status">✓ 已落库 (v1 #1026)</span>
+              </div>
+
+              <!-- Embedded Mermaid UML Preview -->
+              <div class="uml-diagram-box">
+                <div style="color:var(--text-3); font-size:10px; margin-bottom:4px;">UML 时序图源码 (Mermaid 原生渲染已同步 Docmost):</div>
+                <code>
+sequenceDiagram<br>
+&nbsp;&nbsp;&nbsp;&nbsp;autonumber<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actor User as 终端开发者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;participant Build as bgssai-build<br>
+&nbsp;&nbsp;&nbsp;&nbsp;participant MCP as Docmost MCP Service<br>
+&nbsp;&nbsp;&nbsp;&nbsp;participant DB as MySQL Store<br>
+&nbsp;&nbsp;&nbsp;&nbsp;User->>Build: 触发 AI 编程与设计同步<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Build->>MCP: create_page(title="概要设计", content_md=...)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;MCP->>DB: 写入文档并递增版本快照 (version=1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;MCP-->>Build: 写入成功<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Build-->>User: 前端实时渲染交互式 SVG 矢量图
+                </code>
+              </div>
+            </div>
+
+            <!-- Files Changed Card -->
+            <div class="files-card">
+              <div class="fc-head">
+                <span>4 Files Changed (+290 −12)</span>
+                <a class="btn btn-sm" href="agent-review.html">Review Changes</a>
+              </div>
+              <div class="fc-row">
+                <span>§</span>
+                <span class="fn">UserAuthService.java</span>
+                <span class="add">+124</span>
+                <span class="del">−8</span>
+              </div>
+              <div class="fc-row">
+                <span>§</span>
+                <span class="fn">UserAuthMapper.java</span>
+                <span class="add">+32</span>
+              </div>
+              <div class="fc-row">
+                <span>§</span>
+                <span class="fn">InstallScriptController.java</span>
+                <span class="add">+89</span>
+              </div>
+              <div class="fc-row">
+                <span>§</span>
+                <span class="fn">McpToolService.java</span>
+                <span class="add">+45</span>
+                <span class="del">−4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow-up Composer -->
+        <div class="followup">
+          <div class="followup-box">
+            <textarea placeholder="Send follow-up /doc to update architecture, or specify revisions..." rows="2"></textarea>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+              <button class="icon-btn" type="button" title="Attach">+</button>
+              <a class="model-sel" href="settings-models.html">Claude 3.7 Sonnet ▾</a>
+              <span style="flex:1;"></span>
+              <a class="btn btn-sm btn-primary" href="#">Send</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="../js/nav.js"></script>
+</body>
+</html>
