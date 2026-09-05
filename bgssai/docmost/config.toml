@@ -1,0 +1,24 @@
+# bgssai-build -> bgssai-docmost 的 MCP 接线。
+#
+# 这一段合并进 `~/.grok/config.toml` 之后，bgssai-build 在任何项目里写代码时，
+# 都能把设计文档直接写进 docmost 的知识空间。
+# 用 `bgssai/docmost/install.ps1`（Windows）或 `install.sh`（macOS / Linux）自动合并。
+#
+# 令牌不写在这个文件里，用 `${VAR}` 引环境变量：这个文件要进 Git、要发给别人，
+# 明文令牌一旦提交，撤回的代价远大于多设一个环境变量。
+#
+#   BGSSAI_DOCMOST_URL    docmost 用户端地址，例如 https://doc.bgssai.com
+#   BGSSAI_DOCMOST_TOKEN  在 docmost 里签发的个人访问令牌（bgs_doc_ 开头）
+#
+# 变量没设时不会报错，会原样留下 `${BGSSAI_DOCMOST_TOKEN}` 发出去，docmost 回
+# 「令牌无效」。看到这个错先查环境变量，不是令牌本身的问题。
+
+[mcp_servers.bgssai-docmost]
+url = "${BGSSAI_DOCMOST_URL:-http://127.0.0.1:8080}/api/mcp"
+headers = { "Authorization" = "Bearer ${BGSSAI_DOCMOST_TOKEN}" }
+enabled = true
+startup_timeout_sec = 30
+
+# 写一篇详细设计可能是几十 KB 的 Markdown，默认 6000 秒太宽、30 秒又太紧。
+# 120 秒够一次页面写入，卡住了也不至于让整个会话干等。
+tool_timeout_sec = 120
