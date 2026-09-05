@@ -2,19 +2,27 @@
 
 ## 产品线规划（全线统一）
 
-BGSSAI 产品线按下面五条划分职责，各仓实现与文档不得与此冲突。
+BGSSAI 产品线按下面六条划分职责，各仓实现与文档不得与此冲突。
 
 1. **BGSSAI** 是给一人公司（OPC）创业者的全行业工具集合，让用户能找到创业所需的全部工具。
 2. **bgssai-website** 是公司官网，只对外介绍产品与服务，不承载产品操作、在线对话或中心账号。
 3. **bgssai-chat** 提供对标 ChatGPT / Gemini / Claude home / Grok 的 Web 在线对话 AI。
 4. **中心用户账号在 bgssai-chat**：可授权登录旗下各 App；各 App 同时可以有自己的用户账号体系，两者并存。
 5. **bgssai-bot** 对标 Grok Bot。BGSSAI 的全部产品应用可以托管给 Bot 直接操作。
+6. **bgssai-tokenhub** 是模型能力中枢，对接主流模型原生 API 并统一提供给旗下产品；分为境外 `bgssai-tokenhub-global` 与境内 `bgssai-tokenhub-cn`。
 
-Tokenhub / Tokenhub-CN 是模型网关，不是业务 App，也不是 oauth_client。
+Tokenhub / Tokenhub-CN 是产品线模型中枢：对接主流模型原生 API，再提供给旗下产品使用。tokenhub-global 对接国际主流模型，tokenhub-cn 对接中国大陆模型。它们不是业务 App，也不是 oauth_client。
 
 愿景唯一权威：`bgssai-skeleton/docs/PRODUCT-LINE-VISION.md`。本段是各仓副本，变更以该文件为准。
 
-**本仓位置**：本仓是 AI 编程工具（对标 Grok Build），同时是 bgssai-bot 的 Agent 内核来源，不是第 1 条里面向 OPC 用户的业务工具。
+**本仓位置**：本仓是 AI 编程工具，参考 grok-build 与 cursor 的设计；同时是 bgssai-bot 的
+Agent 内核来源。不是第 1 条里面向 OPC 用户的业务工具。
+
+**与 `bgssai-docmost` 合起来是一套研发解决方案**：AI 写代码时，用户根本不知道它做了什么——
+为什么这样设计、模块怎么交互、状态怎么流转，全在一次性的对话里，关掉就没了。所以本仓在编程的
+同时，把软件工程该有的那套文档直接写进 `bgssai-docmost`：需求说明、概要设计、详细设计、
+类图、流程图、时序图、泳道图、状态图。文档与代码同一次产出、同一处留存、带版本历史。
+本仓的安装包也从 `bgssai-docmost` 的站点下载。
 
 > 本文件与 `AGENTS.md` 内容保持一致（供不同 AI 工具各自读取），改一处必须同步改另一处。
 
