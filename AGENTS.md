@@ -13,6 +13,8 @@ BGSSAI 产品线按下面六条划分职责，各仓实现与文档不得与此�
 
 Tokenhub / Tokenhub-CN 是产品线模型中枢：对接主流模型原生 API，再提供给旗下产品使用。tokenhub-global 对接国际主流模型，tokenhub-cn 对接中国大陆模型。它们不是业务 App，也不是 oauth_client。
 
+有用户端的应用必须支持账号密码、手机验证码、邮箱验证码登录。境内授权登录：微信、抖音、百度、支付宝。境外（saas-global / geo-global / tokenhub-global）：Google、GitHub。官网无登录。管理端不开放注册。本仓不是 Web 用户端，不套登录三条。
+
 愿景唯一权威：`bgssai-skeleton/docs/PRODUCT-LINE-VISION.md`。本段是各仓副本，变更以该文件为准。
 
 **本仓位置**：本仓是 AI 编程工具，参考 grok-build 与 cursor 的设计；同时是 bgssai-bot 的
